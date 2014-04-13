@@ -4,7 +4,7 @@
  * App module
  * @type {object}
  */
-var app = angular.module('clickingff7', ['ngRoute', 'ngCookies']);
+var app = angular.module('ff7js', ['ngRoute', 'ngCookies']);
 
 /**
  * Utils Service
