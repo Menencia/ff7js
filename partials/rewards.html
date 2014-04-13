@@ -1,0 +1,44 @@
+<div class="screen rewards">
+
+    <div class="block title">
+        Gained EXP and AP.
+    </div>
+
+    <div class="block xp">
+        <div class="part key">EXP</div><!--
+        --><div class="part value">10p</div>
+    </div><!--
+    --><div class="block ap">
+        <div class="part key">AP</div><!--
+        --><div class="part value">0p</div>
+    </div>
+
+    <div ng-repeat="character in game.getTeam()" class="block character">
+        <div class="part avatar">
+            <img ng-src="/img/characters/{{character.image}}" />
+        </div>
+        <div class="part infos">
+            {{character.name}}<br /><br />
+            Level : {{character.level}}
+        </div>
+        <div class="part labels">
+            EXP :<br /><br />
+            next level :
+        </div>
+        <div class="part gains">
+            1877p
+            <div class="gaugeMax">
+                <div class="gauge level" ng-style="{'width': character.levelProgress(100)}"></div>
+            </div>
+            0p
+        </div>
+    </div>
+
+    <div class="block character" ng-show="game.getTeam().length < 2"></div>
+    <div class="block character" ng-show="game.getTeam().length < 3"></div>
+
+    <div class="block next">
+        <div class="link active" ng-click="game.getRewards()">next</div>
+    </div>
+
+</div>

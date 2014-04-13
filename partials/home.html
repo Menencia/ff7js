@@ -1,0 +1,54 @@
+<div class="screen home">
+
+    <div class="block characters">
+        <div ng-repeat="character in game.getTeam()" class="character">
+            <div class="avatar back">
+                <img ng-src="/img/characters/{{character.image}}" />
+            </div>
+            <div class="infos1">
+                {{character.name}}<br />
+                <span class="label">NV</span> {{character.level}}<br />
+                <span class="label">HP</span> {{character.hp}} / {{character.hpMax()}}<br />
+                <span class="label">MP</span> {{character.mp}} / {{character.mpMax()}}<br />
+            </div>
+            <div class="infos2">
+                next level<br />
+                <div class="gaugeMax">
+                    <div class="gauge level" ng-style="{'width': character.levelProgress(100)}"></div>
+                </div>
+                Limit level 1<br />
+                <div class="gaugeMax">
+                    <div class="gauge limit" ng-style="{'width': character.limitProgress(100)}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="block menu">
+        <div class="menu link" ng-click="game.zone.explore()" ng-class="{active: game.zone.canExplore()}">EXPLORE</div>
+        <div class="menu link">ITEM</div>
+        <div class="menu link">MAGIC</div>
+        <div class="menu link">MATERIA</div>
+        <div class="menu link">EQUIP</div>
+        <div class="menu link">STATUS</div>
+        <div class="menu link">ORDER</div>
+        <div class="menu link">LIMIT</div>
+        <div class="menu link">CONFIG</div>
+        <div class="menu link">PHS</div>
+        <div class="menu link">SAVE</div>
+    </div>
+
+    <div class="block infos">
+        <dl>
+            <dt>Time</dt>
+            <dd>{{game.getTime()}}</dd>
+            <dt>Gil</dt>
+            <dd>{{game.gils}}</dd>
+        </dl>
+    </div>
+
+    <div class="block zone">
+        {{game.zone.name}}
+    </div>
+
+</div>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr" ng-app="clickingff7">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <meta name="revisit-after" content="7 days"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1"/>
+
+    <title>Clicking FF7</title>
+
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="wrapper">
+            clicking ff7
+        </div>
+    </header>
+
+    <div class="wrapper">
+        <div class="screen" ng-view></div>
+    </div>
+
+    <footer>
+        <div class="wrapper">
+            ©2014 menencia.com, version <strong><big>{{game.version}}</big></strong> still beta.
+            <br/><a href="http://clickingff7.tumblr.com/" target="_blank">What's new?</a> -
+            <a href="http://www.reddit.com/r/clickingff7/" target="_blank">Reddit</a> -
+            <a href="https://github.com/Menencia/clickingff7" target="_blank">Github</a>
+        </div>
+    </footer>
+
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/move.js/move.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-route.min.js"></script>
+    <script src="js/angular-cookies.min.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/app.js"></script>
+
+    <script src="src/character.js"></script>
+    <script src="src/characters/cloud.js"></script>
+    <script src="src/characters/barret.js"></script>
+    <script src="src/enemy.js"></script>
+    <script src="src/enemies/first-ray.js"></script>
+    <script src="src/item.js"></script>
+    <script src="src/items/potion.js"></script>
+    <script src="src/materia.js"></script>
+    <script src="src/materias/bolt.js"></script>
+    <script src="src/materias/restore.js"></script>
+    <script src="src/weapon.js"></script>
+    <script src="src/weapons/buster-sword.js"></script>
+    <script src="src/weapons/gatling-gun.js"></script>
+    <script src="src/zone.js"></script>
+    <script src="src/zones/zone1.js"></script>
+    <script src="src/action.js"></script>
+    <script src="src/battle.js"></script>
+    <script src="src/commands.js"></script>
+    <script src="src/command.js"></script>
+    <script src="src/game.js"></script>
+
+</body>
+
+</html>

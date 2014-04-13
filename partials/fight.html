@@ -1,0 +1,56 @@
+<div class="screen fight">
+
+    <div class="field">
+        <div ng-repeat="enemy in game.battle.opponents" class="part enemies">
+            <img height="60" ng-src="/img/enemies/1/{{enemy.image}}" />
+
+            <span class="info">{{enemy.name}} — {{enemy.hp}} /{{enemy.hpMax}}</span>
+        </div><!--
+        --><div class="part characters">
+            <img class="plot" src="/img/sprites/cloud.png" />
+        </div>
+    </div>
+
+    <div class="block commands">
+        <div class="block command" ng-show="game.battle.commands.current">
+            <div ng-repeat="skill in game.battle.commands.current.skills">
+                <div class="link active" ng-click="skill.fn.use()">{{skill.name}}</div>
+            </div>
+        </div>
+        <div class="legend">
+            <div class="panel name">name</div>
+            <div class="panel hp">hp</div>
+            <div class="panel mp">mp</div>
+            <div class="panel atb">limit</div>
+            <div class="panel atb">time</div>
+        </div>
+        <div ng-repeat="character in game.getTeam()" class="character">
+            <div class="panel name">
+                {{character.name}}
+            </div>
+            <div class="panel hp">
+                <div>{{character.hp}}/{{character.hpMax()}}</div>
+                <div class="miniGaugeMax">
+                    <div class="miniGauge hp" ng-style="{'width': character.hpProgress(100)}"></div>
+                </div>
+            </div>
+            <div class="panel mp">
+                <div>{{character.mpMax()}}</div>
+                <div class="miniGaugeMax">
+                    <div class="miniGauge mp" ng-style="{'width': character.mpProgress(100)}"></div>
+                </div>
+            </div>
+            <div class="panel limit">
+                <div class="gaugeMax">
+                    <div class="gauge limit" ng-style="{'width': character.limitProgress(100)}"></div>
+                </div>
+            </div>
+            <div class="panel atb">
+                <div class="gaugeMax">
+                    <div class="gauge atb" ng-style="{'width': character.atbProgress(100)}" ng-class="{full: character.atbFull()}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
