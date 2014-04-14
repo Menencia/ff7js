@@ -253,6 +253,10 @@ footer a:hover {
     background-color: rgb(0, 255, 148);
 }
 
+.gauge.exp {
+    background-color: rgb(232, 156, 193);
+}
+
 .gauge.atb {
     background-color: rgb(95, 233, 172);
 }

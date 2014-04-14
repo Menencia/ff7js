@@ -1,13 +1,20 @@
 class Action
 
-  # @property [Array<Character, Enemy>]
+  # @property [Character, Enemy] The one who execute the action
+  fighter: null
+
+  # @property [Array<Character, Enemy>] The ones targeted by the actions
   targets: []
 
-  # @property [Integer]
+  # @property [Integer] Base hits of the action
   hits: 0
 
-  # New action
-  constructor: (@battle) ->
+  # @property [String] The plot of the fighter
+  plot: '.plot'
+
+  # New instance
+  #
+  constructor: (@battle, @fighter) ->
 
   # Get a target
   #
@@ -25,7 +32,21 @@ class Action
   damages: (@hits) ->
 
   # Execute an action
+  # An action is composed by moves
   #
-  exec: ->
-    for target in @targets
-      target.getDamaged(@hits)
+  # @param [Function] Executes once the action is done
+  #
+  exec: (fn) ->
+    moves = []
+    moves.push(new Move((=> $(@plot).attr('src', '/img/sprites/cloud2.png')), 100))
+    moves.push(new Move((=> $(@plot).attr('src', '/img/sprites/cloud1.png')), 100))
+    moves.push(new Move((=> $(@plot).attr('src', '/img/sprites/cloud2.png')), 50))
+    moves.push(new Move((=> $(@plot).attr('src', '/img/sprites/cloud3.png')), 50))
+    moves.push(new Move((=> $(@plot).attr('src', '/img/sprites/cloud4.png')), 50))
+    moves.push(new Move((=> $(@plot).attr('src', '/img/sprites/cloud3.png')), 100))
+
+    new Mover(@battle.Game.$timeout, moves, =>
+      for target in @targets
+        target.getDamaged(@hits)
+      fn()
+    )

@@ -1,12 +1,24 @@
 class Battle
 
-  # @property [Commands]
+  # @property [Commands] List of panel commands awaiting
   commands: null
 
-  # @property [Array<Action>]
+  # @property [Array<Action>] List of all actions to execute
   actions: []
 
-  # New battle
+  # @property [Action] Current action ongoing
+  action: null
+
+  # @property [Integer] EXP reward
+  exp: 0
+
+  # @property [Integer] Gil reward
+  gil: 0
+
+  # @property [Integer] AP reward
+  ap: 0
+
+  # New instance
   #
   constructor: (@Game, @opponents) ->
     @commands = new Commands(@)
@@ -21,8 +33,11 @@ class Battle
   run: ->
     @Game.$timeout(=>
       if @actions.length > 0
-        @actions[0].exec()
-        @actions.splice(0, 1)
+        @action = @actions.shift()
+        @action.exec(=>
+          @action.fighter.newTurn()
+          @action = null
+        )
       @run()
     , 1000)
 
@@ -33,3 +48,6 @@ class Battle
     if remaining is 0
       @opponents = []
       @Game.setMode('rewards')
+      for character in @Game.getTeam()
+        character.setEXP(@gil)
+        @Game.setGil(@gil)

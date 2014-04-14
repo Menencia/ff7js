@@ -1,7 +1,7 @@
 class BusterSword extends Weapon
 
-  constructor: (Game) ->
-    super(Game)
+  constructor: (Game, fighter) ->
+    super(Game, fighter)
     @name = 'Buster Sword'
     @type = 'broadsword'
     @hits = 18

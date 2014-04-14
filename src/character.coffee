@@ -2,6 +2,8 @@ class Character
 
   constructor: (@Game) ->
     @level ?= 1
+    @exp ?= 0
+    @expMax ?= 100
     @atb ?= 0
     @atbMax ?= 4000
     @hp ?= @hpMax()
@@ -22,11 +24,14 @@ class Character
   getHits: ->
     @weapon.hits * @level * 0.1
 
+  setEXP: (exp) ->
+    @exp += exp
+
+  expProgress: (width) ->
+    Math.ceil((@exp * width) / @expMax)
+
   equipWeapon: (weapon) ->
     @weapon = weapon
-
-  equipMateria: (materia) ->
-    @materia = materia
 
   materias: ->
     @materias
