@@ -20,7 +20,7 @@ class Game
 
     @$rootScope.game = @
 
-    @version = '0.2.1'
+    @version = '0.2.2'
 
     # time
     @time = 0
