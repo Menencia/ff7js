@@ -185,6 +185,19 @@ footer a:hover {
     text-align: left;
 }
 
+.fight .enemy {
+    position: relative;
+}
+
+.fight .msg {
+    position: absolute;
+    font-size: 20px;
+    top: 0;
+    color: #000;
+    text-shadow: 1px 1px 1px #666;
+    font-weight: bold;
+}
+
 .fight .info {
     font-size: 12px;
     background-color: #d4cb69;
