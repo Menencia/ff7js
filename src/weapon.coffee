@@ -1,6 +1,6 @@
 class Weapon
 
-  constructor: (@Game) ->
+  constructor: (@Game, @fighter) ->
 
   # Deals damages
   use: ->
@@ -13,7 +13,7 @@ class Weapon
       .close()
 
     # register action
-    action = new Action(@Game.battle)
+    action = new Action(@Game.battle, @fighter)
     action.target('random')
-    action.damages(@hits)
+    action.damages(@fighter.getHits())
     @Game.battle.actions.push(action)

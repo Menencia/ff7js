@@ -1,13 +1,16 @@
 <div class="screen fight">
 
     <div class="field">
-        <div ng-repeat="enemy in game.battle.opponents" class="part enemies">
-            <img height="60" ng-src="/img/enemies/1/{{enemy.image}}" />
-
-            <span class="info">{{enemy.name}} — {{enemy.hp}} /{{enemy.hpMax}}</span>
+        <div class="part enemies">
+            <div ng-repeat="enemy in game.battle.opponents" class="enemy">
+                <img height="60" ng-src="/img/enemies/1/{{enemy.image}}" />
+                <div class="msg"></div>
+            </div>
         </div><!--
         --><div class="part characters">
-            <img class="plot" src="/img/sprites/cloud.png" />
+            <div class="character">
+                <img class="plot" src="/img/sprites/cloud3.png" />
+            </div>
         </div>
     </div>
 

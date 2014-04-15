@@ -7,6 +7,9 @@ class Commands
   # @property [Command, null] Active command
   current: null
 
+  # @property [Boolean] Ongoing command ?
+  isActive: false
+
   # New commands
   #
   # @param [Battle] battle
@@ -33,7 +36,6 @@ class Commands
   #
   close: ->
     index = _.indexOf(@list, @current)
-    @current.fighter.newTurn()
-    @current = null
     @list.splice(index, 1)
+    @current = null
     @display()

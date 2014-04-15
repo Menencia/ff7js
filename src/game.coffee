@@ -72,6 +72,13 @@ class Game
     @items.push(item)
     @
 
+  # Add gil
+  #
+  # @param [Integer]
+  #
+  setGil: (gil) ->
+    @gils += gil
+
   # Get the 3 first characters
   #
   # @return [Array<Character>]
