@@ -26,11 +26,11 @@
             next level :
         </div>
         <div class="part gains">
-            {{character.exp}}p
+            {{character.expTotal}}p
             <div class="gaugeMax">
                 <div class="gauge exp" ng-style="{'width': character.expProgress(100)}"></div>
             </div>
-            0p
+            {{character.expRemain()}}p
         </div>
     </div>
 

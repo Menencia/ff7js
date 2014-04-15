@@ -4,6 +4,7 @@ class Character
     @level ?= 1
     @exp ?= 0
     @expMax ?= 100
+    @expTotal ?= 0
     @atb ?= 0
     @atbMax ?= 4000
     @hp ?= @hpMax()
@@ -22,13 +23,24 @@ class Character
     @mpBase * @level
 
   getHits: ->
-    @weapon.hits * @level * 0.1
+    base = @weapon.hits * @level
+    baseMin = Math.ceil((1 - 20/100) * base)
+    baseMax = Math.ceil((1 + 20/100) * base)
+    _.random(baseMin, baseMax)
 
   setEXP: (exp) ->
     @exp += exp
+    @expTotal += exp
+    if @exp > @expMax
+      @level++
+      @exp -= @expMax
+      @expMax += Math.ceil(10 * @level/100 * @expMax)
 
   expProgress: (width) ->
     Math.ceil((@exp * width) / @expMax)
+
+  expRemain: ->
+    @expMax - @exp
 
   equipWeapon: (weapon) ->
     @weapon = weapon

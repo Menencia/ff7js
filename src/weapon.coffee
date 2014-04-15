@@ -15,5 +15,5 @@ class Weapon
     # register action
     action = new Action(@Game.battle, @fighter)
     action.target('random')
-    action.damages(@hits)
+    action.damages(@fighter.getHits())
     @Game.battle.actions.push(action)
