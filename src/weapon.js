@@ -2,10 +2,10 @@ class Weapon {
 
     /**
      * New weapon
-     * @param Game
+     * @param game
      * @param fighter
      */
-    constructor(Game, fighter) {
+    constructor(game, fighter) {
         this.game = game;
         this.fighter = fighter;
     }
@@ -24,7 +24,7 @@ class Weapon {
 
         // register action
         var action = new Action(this.game.battle, this.fighter);
-        action.target('random');
+        action.setTargets('random');
         action.damages(this.fighter.getHits());
         this.game.battle.actions.push(action);
     }

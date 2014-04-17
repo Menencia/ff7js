@@ -13,10 +13,10 @@ class Battle {
         this.exp = this.gil = this.ap = 0;
         this.commands = new Commands(this);
         this.game.setMode('fight');
-        for (opponent of this.opponents) {
+        for (var opponent of this.opponents) {
             opponent.fight();
         }
-        for (character of this.game.getTeam()) {
+        for (var character of this.game.getTeam()) {
             character.fight();
         }
         this.run();
@@ -26,7 +26,7 @@ class Battle {
      * Checks and executes actions
      */
     run() {
-        this.Game.$timeout( () => {
+        this.game.$timeout( () => {
             if (this.actions.length > 0) {
                 this.action = this.actions.shift();
                 this.action.exec(() => {
@@ -46,7 +46,7 @@ class Battle {
         if (remaining === 0) {
             this.opponents = [];
             this.game.setMode('rewards');
-            for (character of this.game.getTeam()) {
+            for (var character of this.game.getTeam()) {
                 character.setEXP(this.exp);
             }
             this.game.setGil(this.gil);

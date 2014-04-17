@@ -17,7 +17,7 @@ class Action {
      * Assign targets
      * @param key
      */
-    targets (key) {
+    setTargets (key) {
         switch (key) {
             case 'random':
                 this.targets = [_.sample(this.battle.opponents)];
@@ -59,7 +59,7 @@ class Action {
         moves.push(new Move(( () => $('.msg').css({top: '-10px', opacity: 0.5})), 70));
         moves.push(new Move(( () => $('.msg').text('')), 40));
 
-        new Mover(this.battle.Game.$timeout, moves, () => {
+        new Mover(this.battle.game.$timeout, moves, () => {
             for (var target of this.targets) {
                 target.getDamaged(this.hits);
             }

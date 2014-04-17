@@ -123,12 +123,12 @@ class Game {
         var hours = Math.floor(elapsed / 3600);
         elapsed -= hours * 3600;
 
-        minutes = Math.floor(elapsed / 60);
+        var minutes = Math.floor(elapsed / 60);
         if (minutes < 10) {
             minutes = '0' + minutes;
         }
 
-        seconds = elapsed - minutes * 60;
+        var seconds = elapsed - minutes * 60;
         if (seconds < 10) {
             seconds = '0' + seconds;
         }

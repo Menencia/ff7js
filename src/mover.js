@@ -14,7 +14,7 @@ class Mover {
      * Run the mover
      */
     run() {
-        if (moves.length === 0) {
+        if (this.moves.length === 0) {
             this.fn();
         } else {
             var move = this.moves.shift();
