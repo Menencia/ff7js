@@ -26,7 +26,7 @@ class Battle {
      * Checks and executes actions
      */
     run() {
-        this.Game.$timeout(=>
+        this.Game.$timeout( () => {
             if (this.actions.length > 0) {
                 this.action = this.actions.shift();
                 this.action.exec(() => {
@@ -35,7 +35,7 @@ class Battle {
                 });
             }
             this.run();
-        , 1000);
+        }, 1000);
     }
 
     /**

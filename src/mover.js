@@ -18,10 +18,10 @@ class Mover {
             this.fn();
         } else {
             var move = this.moves.shift();
-            this.$timeout(=>
+            this.$timeout( () => {
                 move.fn();
                 this.run();
-            , move.ms);
+            }, move.ms);
         }
     }
 

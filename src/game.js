@@ -37,7 +37,7 @@ class Game {
     load() {
         if (!this.loaded) {
             this.loaded = true;
-            var save = @$cookieStore.get('game');
+            var save = this.$cookieStore.get('game');
             if (save) {
                 this.extend(save);
             } else {
@@ -109,10 +109,10 @@ class Game {
      * Run the chrono
      */
     run() {
-        this.$timeout(=>
+        this.$timeout( () => {
             this.time++;
             this.run();
-        , 1000);
+        }, 1000);
     }
 
     /**

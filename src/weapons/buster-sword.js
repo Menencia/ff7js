@@ -1,9 +1,9 @@
-class BusterSword extends Weapon {}
+class BusterSword extends Weapon {
 
     /**
      * New Buster Sword
      */
-    constructor (game, fighter) {
+    constructor(game, fighter) {
         super(game, fighter);
         this.name = 'Buster Sword';
         this.type = 'broadsword';
