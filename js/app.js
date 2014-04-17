@@ -7,11 +7,6 @@
 var app = angular.module('ff7js', ['ngRoute', 'ngCookies']);
 
 /**
- * Utils Service
- */
-app.service('Utils', Utils);
-
-/**
  * Game Service
  */
 app.factory('Game', ['$rootScope', '$location', '$cookieStore', '$http', '$timeout', function($rootScope, $location, $cookieStore, $http, $timeout) {
@@ -22,25 +17,25 @@ app.factory('Game', ['$rootScope', '$location', '$cookieStore', '$http', '$timeo
  * Routes logic
  */
 app.config(['$routeProvider',
-  function($routeProvider) {
+    function($routeProvider) {
 
-    $routeProvider.
-    when('/home', {
-      templateUrl: 'partials/home.html',
-      controller: HomeCtrl
-    }).
-    when('/fight', {
-      templateUrl: 'partials/fight.html',
-      controller: FightCtrl
-    }).
-    when('/rewards', {
-      templateUrl: 'partials/rewards.html',
-      controller: RewardsCtrl
-    }).
-    otherwise({
-      redirectTo: '/home'
-    });
-  }
+        $routeProvider.
+            when('/home', {
+                templateUrl: 'partials/home.html',
+                controller: HomeCtrl
+            }).
+            when('/fight', {
+                templateUrl: 'partials/fight.html',
+                controller: FightCtrl
+            }).
+            when('/rewards', {
+                templateUrl: 'partials/rewards.html',
+                controller: RewardsCtrl
+            }).
+            otherwise({
+                redirectTo: '/home'
+            });
+    }
 ]);
 
 /**
@@ -49,16 +44,16 @@ app.config(['$routeProvider',
 
 function NavCtrl($scope, $location, Game) {
 
-  $scope.isActive = function(route) {
-    return route === $location.path();
-  }
+    $scope.isActive = function(route) {
+        return route === $location.path();
+    }
 
-  /**
-   * Go to the game
-   */
-  $scope.home = function() {
-    $location.path("/home");
-  };
+    /**
+     * Go to the game
+     */
+    $scope.home = function() {
+        $location.path("/home");
+    };
 
 }
 
@@ -66,7 +61,7 @@ function NavCtrl($scope, $location, Game) {
  * /game
  */
 function HomeCtrl(Game) {
-  Game.load();
+    Game.load();
 }
 
 /**
