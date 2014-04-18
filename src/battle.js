@@ -52,6 +52,20 @@ class Battle {
     }
 
     /**
+     * Test if the group is unable to fight (means victory for other group)
+     * - All the party group has 0 HP
+     * @param group
+     */
+    testEnd(group) {
+        var remaining = _.filter(this['group' + group], function(fighter) {return (fighter.hp > 0);}).length;
+        if (remaining === 0 && group == 'A') {
+            this.end();
+        } else {
+            this.gameOver();
+        }
+    }
+
+    /**
      * End of the battle
      */
     end() {
@@ -66,11 +80,23 @@ class Battle {
             this.game.$timeout.cancel(this.running);
 
             this.game.setMode('rewards');
-            for (var character of this.groupB) {
-                character.setEXP(this.exp);
+            for (var fighter of this.groupA) {
+                this.exp += fighter.exp;
+                this.gil += fighter.gil;
+                this.ap += fighter.ap;
+            }
+            for (var fighter of this.groupB) {
+                fighter.setEXP(this.exp);
             }
             this.game.setGil(this.gil);
         }
+    }
+
+    /**
+     * End game
+     */
+    gameOver() {
+        this.game.setMode('game-over');
     }
 
 }

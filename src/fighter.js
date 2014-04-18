@@ -72,10 +72,7 @@ class Fighter {
         this.hp -= damages;
         this.hp = Math.max(this.hp, 0);
         if (this.hp === 0) {
-            this.game.battle.exp += this.exp;
-            this.game.battle.gil += this.gil;
-            this.game.battle.ap += this.ap;
-            this.game.battle.end();
+            this.game.battle.testEnd(this.group);
         }
     }
 }

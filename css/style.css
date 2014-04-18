@@ -357,3 +357,11 @@ footer a:hover {
     width: 100px;
     height: 50px;
 }
+
+/* SCREEN GAME OVER */
+
+.game-over {
+    width: 800px;
+    height: 415px;
+    background: url(/img/game-over.jpg) no-repeat;
+}
