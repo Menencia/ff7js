@@ -286,10 +286,30 @@ footer a:hover {
     background-color: rgb(232, 156, 193);
 }
 
+.gauge.limit.full {
+    -webkit-animation: limitAnim 1s infinite;
+    animation: limitAnim 1s infinite;
+}
+
+    /* Chrome, Safari, Opera */
+    @-webkit-keyframes limitAnim
+    {
+        0%   {background-color: rgb(159, 234, 109);}
+        50%  {background-color: rgb(232, 156, 193);}
+        100%  {background-color: rgb(159, 234, 109);}
+    }
+
+    /* Standard syntax */
+    @keyframes limitAnim
+    {
+        0%   {background-color: rgb(159, 234, 109);}
+        50%  {background-color: rgb(232, 156, 193);}
+        100%  {background-color: rgb(159, 234, 109);}
+    }
+
 .barProgress {
     -webkit-transition: 0.5s linear all;
     -moz-transition: 0.5s linear all;
-    -o-transition: 0.5s linear all;
     transition: 0.5s linear all;
 }
 

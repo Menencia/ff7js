@@ -18,7 +18,7 @@
                 </div>
                 Limit level 1<br />
                 <div class="gaugeMax">
-                    <div class="gauge limit" ng-style="{'width': character.limitProgress(100)}"></div>
+                    <div class="gauge limit" ng-style="{'width': character.limitProgress(100)}" ng-class="{full: character.limitFull()}"></div>
                 </div>
             </div>
         </div>
