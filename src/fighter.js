@@ -42,7 +42,7 @@ class Fighter {
      * Fighting process
      */
     keepFighting() {
-        this.game.$timeout( () => {
+        this.fighting = this.game.$timeout( () => {
             if (this.game.mode !== 'fight') return;
             if (this.status === 'running') {
                 this.atb += this.delay;

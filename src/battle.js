@@ -17,6 +17,7 @@ class Battle {
         this.action = null;
         this.exp = this.gil = this.ap = 0;
         this.commands = new Commands(this);
+        this.message = '';
 
         this.game.setMode('fight');
         for (var f of this.groupA) {
@@ -34,12 +35,16 @@ class Battle {
      * Checks and executes actions
      */
     run() {
-        this.game.$timeout( () => {
-            if (this.actions.length > 0) {
+        this.running = this.game.$timeout( () => {
+            if (!this.pause && this.actions.length > 0) {
+                this.message = 'Attack';
+                this.pause = true;
                 this.action = this.actions.shift();
                 this.action.exec( () => {
                     this.action.fighter.newTurn();
                     this.action = null;
+                    this.message = '';
+                    this.pause = false;
                 });
             }
             this.run();
@@ -50,11 +55,18 @@ class Battle {
      * End of the battle
      */
     end() {
-        var remaining = _.filter(this.opponents, function(enemy) {return (enemy.hp > 0);}).length;
+        var remaining = _.filter(this.groupA, function(fighter) {return (fighter.hp > 0);}).length;
         if (remaining === 0) {
-            this.opponents = [];
+
+            // Cancel timeouts
+            var groups = _.union(this.groupA, this.groupB);
+            for (var f in groups) {
+                this.game.$timeout.cancel(f.fighting);
+            }
+            this.game.$timeout.cancel(this.running);
+
             this.game.setMode('rewards');
-            for (var character of this.game.getTeam()) {
+            for (var character of this.groupB) {
                 character.setEXP(this.exp);
             }
             this.game.setGil(this.gil);
