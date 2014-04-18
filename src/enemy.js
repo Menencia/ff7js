@@ -1,31 +1,33 @@
-class Enemy {
+class Enemy extends Fighter {
 
     /**
      * New Enemy
      * @param game
      */
     constructor (game) {
-        this.game = game;
+        super(game);
     }
 
     /**
-     * @todo
+     * Returns random hits
+     * @returns {*}
      */
-    fight() {}
+    getHits() {
+        var base = this.strength;
+        var baseMin = Math.ceil((1 - 20/100) * base);
+        var baseMax = Math.ceil((1 + 20/100) * base);
+        return _.random(baseMin, baseMax);
+    }
 
     /**
-     * The enemy takes damages
-     * @param damages
+     * Execute something when atb is full
+     * IA choose automatically a skill
      */
-    getDamaged (damages) {
-        this.hp -= damages;
-        this.hp = Math.max(this.hp, 0);
-        if (this.hp === 0) {
-            this.game.battle.exp += this.exp;
-            this.game.battle.gil += this.gil;
-            this.game.battle.ap += this.ap;
-            this.game.battle.end();
-        }
+    exec() {
+        var action = new Action(this.game.battle, this);
+        action.setTargets('enemies', 'random');
+        action.damages(this.getHits());
+        this.game.battle.actions.push(action);
     }
 
 }

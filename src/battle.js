@@ -1,23 +1,31 @@
 class Battle {
 
     /**
-     * New Battle
+     * New Battle between 2 groups
+     * GroupA is at the left
+     * GroupB is at the right
      * @param game
-     * @param opponents
+     * @param groupA
+     * @param groupB
      */
-    constructor (game, opponents) {
+    constructor (game, groupA, groupB) {
         this.game = game;
-        this.opponents = opponents;
+        this.groupA = groupA;
+        this.groupB = groupB;
+
         this.actions = [];
         this.action = null;
         this.exp = this.gil = this.ap = 0;
         this.commands = new Commands(this);
+
         this.game.setMode('fight');
-        for (var opponent of this.opponents) {
-            opponent.fight();
+        for (var f of this.groupA) {
+            f.group = 'A';
+            f.fight();
         }
-        for (var character of this.game.getTeam()) {
-            character.fight();
+        for (var f of this.groupB) {
+            f.group = 'B';
+            f.fight();
         }
         this.run();
     }
@@ -29,7 +37,7 @@ class Battle {
         this.game.$timeout( () => {
             if (this.actions.length > 0) {
                 this.action = this.actions.shift();
-                this.action.exec(() => {
+                this.action.exec( () => {
                     this.action.fighter.newTurn();
                     this.action = null;
                 });
@@ -42,7 +50,7 @@ class Battle {
      * End of the battle
      */
     end() {
-        var remaining = _.filter(this.opponents, function(enemy) {enemy.hp > 0}).length;
+        var remaining = _.filter(this.opponents, function(enemy) {return (enemy.hp > 0);}).length;
         if (remaining === 0) {
             this.opponents = [];
             this.game.setMode('rewards');

@@ -3,7 +3,7 @@
     <div class="block characters">
         <div ng-repeat="character in game.getTeam()" class="character">
             <div class="avatar back">
-                <img ng-src="/img/characters/{{character.image}}" />
+                <img ng-src="{{character.image}}" />
             </div>
             <div class="infos1">
                 {{character.name}}<br />

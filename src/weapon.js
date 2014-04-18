@@ -24,7 +24,7 @@ class Weapon {
 
         // register action
         var action = new Action(this.game.battle, this.fighter);
-        action.setTargets('random');
+        action.setTargets('enemies', 'random');
         action.damages(this.fighter.getHits());
         this.game.battle.actions.push(action);
     }

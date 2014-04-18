@@ -17,10 +17,22 @@ class Action {
      * Assign targets
      * @param key
      */
-    setTargets (key) {
+    setTargets (type, key) {
+        var opponents;
+
+        switch (type) {
+            case 'allies':
+                opponents = this.battle['group' + this.fighter.group];
+                break;
+            case 'enemies':
+                var letter = (this.fighter.group === 'A') ? 'B': 'A';
+                opponents = this.battle['group' + letter];
+                break;
+        }
+
         switch (key) {
             case 'random':
-                this.targets = [_.sample(this.battle.opponents)];
+                this.targets = [_.sample(opponents)];
                 break;
         }
     }

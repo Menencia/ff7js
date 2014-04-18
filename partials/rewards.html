@@ -15,7 +15,7 @@
 
     <div ng-repeat="character in game.getTeam()" class="block character">
         <div class="part avatar">
-            <img ng-src="/img/characters/{{character.image}}" />
+            <img ng-src="{{character.image}}" />
         </div>
         <div class="part infos">
             {{character.name}}<br /><br />

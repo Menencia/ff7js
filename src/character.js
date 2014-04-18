@@ -1,18 +1,13 @@
-class Character {
+class Character extends Fighter {
 
     /**
      * @param game
      */
     constructor(game) {
-        this.game = game;
-        this.level = 1;
+        super(game);
         this.exp = 0;
         this.expMax = 100;
         this.expTotal = 0;
-        this.atb = 0;
-        this.atbMax = 4000;
-        this.hp = this.hpMax();
-        this.mp = this.mpMax();
     }
 
     /**
@@ -30,22 +25,6 @@ class Character {
      */
     atbFull() {
         return this.atb === this.atbMax;
-    }
-
-    /**
-     * Returns calculated total HP
-     * @returns {number}
-     */
-    hpMax() {
-        return this.hpBase * this.level;
-    }
-
-    /**
-     * Returns calculated total MP
-     * @returns {number}
-     */
-    mpMax() {
-        return this.mpBase * this.level;
     }
 
     /**
@@ -109,38 +88,11 @@ class Character {
     }
 
     /**
-     * Character begins fighting
+     * Execute something when atb is full
+     * Creating a commands panel awaiting for the player to choose a skill
      */
-    fight() {
-        this.delay = 100;
-        this.status = 'running';
-        this.keepFighting();
-    }
-
-    /**
-     * Fighting process
-     */
-    keepFighting() {
-        this.game.$timeout( () => {
-            if (this.game.mode !== 'fight') return;
-            if (this.status === 'running') {
-                this.atb += this.delay;
-                this.atb = Math.min(this.atb, this.atbMax);
-                if (this.atb === this.atbMax) {
-                    this.status = 'waiting';
-                    this.game.battle.commands.add(new Command(this));
-                }
-            }
-            this.keepFighting()
-        }, this.delay);
-    }
-
-    /**
-     * New turn for the character
-     */
-    newTurn() {
-        this.status = 'running';
-        this.atb = 0;
+    exec() {
+        this.game.battle.commands.add(new Command(this));
     }
 
 }
