@@ -1,15 +1,18 @@
 <div class="screen fight">
 
+    <div class="block message" ng-show="game.battle.message != ''">{{game.battle.message}}</div>
+
     <div class="field">
         <div class="part enemies">
-            <div ng-repeat="enemy in game.battle.opponents" class="enemy">
-                <img height="60" ng-src="/img/enemies/1/{{enemy.image}}" />
+            <div ng-repeat="fighter in game.battle.groupA" class="enemy {{fighter.plot}}">
+                <img class="plot" height="60" ng-src="{{fighter.image}}" />
                 <div class="msg"></div>
             </div>
         </div><!--
         --><div class="part characters">
-            <div class="character">
+            <div ng-repeat="fighter in game.battle.groupB" class="character {{fighter.plot}}">
                 <img class="plot" src="/img/sprites/cloud3.png" />
+                <div class="msg"></div>
             </div>
         </div>
     </div>

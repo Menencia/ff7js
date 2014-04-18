@@ -174,6 +174,15 @@ footer a:hover {
 
 /** SCREEN FIGHT **/
 
+.block.message {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    z-index: 1;
+    text-align: center;
+}
+
 .fight .part {
     display: inline-block;
     width: 400px;
@@ -185,26 +194,21 @@ footer a:hover {
     text-align: left;
 }
 
-.fight .enemy {
+.fight .enemy, .fight .character {
     position: relative;
 }
 
 .fight .msg {
     position: absolute;
     font-size: 20px;
-    top: 0;
     color: #000;
+    top: 10px;
     text-shadow: 1px 1px 1px #666;
     font-weight: bold;
 }
 
-.fight .info {
-    font-size: 12px;
-    background-color: #d4cb69;
-    border-radius: 10px;
-    box-shadow: 4px 4px #999;
-    padding: 3px;
-}
+.enemies .msg {left: 10px;}
+.characters .msg {right: 30px;}
 
 .fight .part.characters {
     text-align: right;
@@ -352,4 +356,12 @@ footer a:hover {
     right: 0;
     width: 100px;
     height: 50px;
+}
+
+/* SCREEN GAME OVER */
+
+.game-over {
+    width: 800px;
+    height: 415px;
+    background: url(/img/game-over.jpg) no-repeat;
 }

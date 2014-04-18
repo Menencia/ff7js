@@ -8,7 +8,6 @@ class Action {
     constructor (battle, fighter) {
         this.battle = battle;
         this.fighter = fighter;
-        this.plot = '.plot';
         this.hits = 0;
         this.targets = [];
     }
@@ -17,10 +16,22 @@ class Action {
      * Assign targets
      * @param key
      */
-    setTargets (key) {
+    setTargets (type, key) {
+        var opponents;
+
+        switch (type) {
+            case 'allies':
+                opponents = this.battle['group' + this.fighter.group];
+                break;
+            case 'enemies':
+                var letter = (this.fighter.group === 'A') ? 'B': 'A';
+                opponents = this.battle['group' + letter];
+                break;
+        }
+
         switch (key) {
             case 'random':
-                this.targets = [_.sample(this.battle.opponents)];
+                this.targets = [_.sample(opponents)];
                 break;
         }
     }
@@ -35,31 +46,10 @@ class Action {
     /**
      * Execute an action
      * An action is composed by moves
+     * Executes fn when moves finished
      */
-    exec (fn) {
-        var moves = [];
-
-        moves.push(new Move(( () => $(this.plot).attr('src', '/img/sprites/cloud2.png')), 100));
-        moves.push(new Move(( () => $(this.plot).attr('src', '/img/sprites/cloud1.png')), 100));
-        moves.push(new Move(( () => $(this.plot).attr('src', '/img/sprites/cloud2.png')), 50));
-        moves.push(new Move(( () => $(this.plot).attr('src', '/img/sprites/cloud3.png')), 50));
-        moves.push(new Move(( () => $(this.plot).attr('src', '/img/sprites/cloud4.png')), 50));
-        moves.push(new Move(( () => $(this.plot).attr('src', '/img/sprites/cloud3.png')), 100));
-
-        moves.push(new Move(( () => $('.msg').text(this.hits)), 0));
-        moves.push(new Move(( () => $('.msg').css({top: '-1px', opacity: 0.9})), 0));
-        moves.push(new Move(( () => $('.msg').css({top: '-2px', opacity: 0.9})), 70));
-        moves.push(new Move(( () => $('.msg').css({top: '-3px', opacity: 0.8})), 70));
-        moves.push(new Move(( () => $('.msg').css({top: '-4px', opacity: 0.8})), 70));
-        moves.push(new Move(( () => $('.msg').css({top: '-5px', opacity: 0.7})), 70));
-        moves.push(new Move(( () => $('.msg').css({top: '-6px', opacity: 0.7})), 70));
-        moves.push(new Move(( () => $('.msg').css({top: '-7px', opacity: 0.6})), 70));
-        moves.push(new Move(( () => $('.msg').css({top: '-8px', opacity: 0.6})), 70));
-        moves.push(new Move(( () => $('.msg').css({top: '-9px', opacity: 0.5})), 70));
-        moves.push(new Move(( () => $('.msg').css({top: '-10px', opacity: 0.5})), 70));
-        moves.push(new Move(( () => $('.msg').text('')), 40));
-
-        new Mover(this.battle.game.$timeout, moves, () => {
+    exec(fn) {
+        this.model.anim( this.targets, () => {
             for (var target of this.targets) {
                 target.getDamaged(this.hits);
             }

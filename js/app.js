@@ -32,6 +32,10 @@ app.config(['$routeProvider',
                 templateUrl: 'partials/rewards.html',
                 controller: RewardsCtrl
             }).
+            when('/game-over', {
+                templateUrl: 'partials/game-over.html',
+                controller: GameOverCtrl
+            }).
             otherwise({
                 redirectTo: '/home'
             });
@@ -78,6 +82,15 @@ function FightCtrl($location, Game) {
  */
 function RewardsCtrl($location, Game) {
     if (Game.mode != 'rewards') {
+        $location.path('/home');
+    }
+}
+
+/**
+ * /game-over
+ */
+function GameOverCtrl($location, Game) {
+    if (Game.mode != 'game-over') {
         $location.path('/home');
     }
 }
