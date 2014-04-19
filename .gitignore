@@ -1,5 +1,5 @@
 .idea
 doc
 bower_components
-src/**/*.js
-src/**/*.map
+node_modules
+dist

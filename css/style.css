@@ -1,6 +1,4 @@
 body {
-    margin: 0;
-    padding: 0;
     color: #444;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -63,7 +61,12 @@ footer a:hover {
     background-image: linear-gradient(150deg, rgb(12, 10, 159), rgb(15,17,40));
     color: #fff;
     padding: 10px;
+    -moz-box-sizing: border-box;
     box-sizing: border-box;
+}
+
+.block.limit {
+    background-image: linear-gradient(150deg, #9f1305, #994e67);
 }
 
 .avatar img {
@@ -142,7 +145,7 @@ footer a:hover {
     }
 
     dd {
-        width: 100px;
+        width: 99px;
         display: inline-block;
         text-align: right;
         font-weight: bold;
@@ -174,10 +177,20 @@ footer a:hover {
 
 /** SCREEN FIGHT **/
 
+.block.message {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    z-index: 1;
+    text-align: center;
+}
+
 .fight .part {
     display: inline-block;
     width: 400px;
     padding: 60px;
+    -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -185,26 +198,21 @@ footer a:hover {
     text-align: left;
 }
 
-.fight .enemy {
+.fight .enemy, .fight .character {
     position: relative;
 }
 
 .fight .msg {
     position: absolute;
     font-size: 20px;
-    top: 0;
     color: #000;
+    top: 10px;
     text-shadow: 1px 1px 1px #666;
     font-weight: bold;
 }
 
-.fight .info {
-    font-size: 12px;
-    background-color: #d4cb69;
-    border-radius: 10px;
-    box-shadow: 4px 4px #999;
-    padding: 3px;
-}
+.enemies .msg {left: 10px;}
+.characters .msg {right: 30px;}
 
 .fight .part.characters {
     text-align: right;
@@ -220,6 +228,13 @@ footer a:hover {
 .fight .block.command {
     top: 0;
     left: 200px;
+    z-index: 5;
+}
+
+.fight .block.subcommand {
+    top: 10px;
+    left: 210px;
+    z-index: 10;
 }
 
 .fight .legend .panel {
@@ -282,10 +297,30 @@ footer a:hover {
     background-color: rgb(232, 156, 193);
 }
 
+.gauge.limit.full {
+    -webkit-animation: limitAnim 1s infinite;
+    animation: limitAnim 1s infinite;
+}
+
+    /* Chrome, Safari, Opera */
+    @-webkit-keyframes limitAnim
+    {
+        0%   {background-color: rgb(159, 234, 109);}
+        50%  {background-color: rgb(232, 156, 193);}
+        100%  {background-color: rgb(159, 234, 109);}
+    }
+
+    /* Standard syntax */
+    @keyframes limitAnim
+    {
+        0%   {background-color: rgb(159, 234, 109);}
+        50%  {background-color: rgb(232, 156, 193);}
+        100%  {background-color: rgb(159, 234, 109);}
+    }
+
 .barProgress {
     -webkit-transition: 0.5s linear all;
     -moz-transition: 0.5s linear all;
-    -o-transition: 0.5s linear all;
     transition: 0.5s linear all;
 }
 
@@ -352,4 +387,12 @@ footer a:hover {
     right: 0;
     width: 100px;
     height: 50px;
+}
+
+/* SCREEN GAME OVER */
+
+.game-over {
+    width: 800px;
+    height: 415px;
+    background: url(/img/game-over.jpg) no-repeat;
 }

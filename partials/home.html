@@ -3,7 +3,7 @@
     <div class="block characters">
         <div ng-repeat="character in game.getTeam()" class="character">
             <div class="avatar back">
-                <img ng-src="/img/characters/{{character.image}}" />
+                <img ng-src="{{character.image}}" />
             </div>
             <div class="infos1">
                 {{character.name}}<br />
@@ -18,7 +18,7 @@
                 </div>
                 Limit level 1<br />
                 <div class="gaugeMax">
-                    <div class="gauge limit" ng-style="{'width': character.limitProgress(100)}"></div>
+                    <div class="gauge limit" ng-style="{'width': character.limitProgress(100)}" ng-class="{full: character.limitFull()}"></div>
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
             <dt>Time</dt>
             <dd>{{game.getTime()}}</dd>
             <dt>Gil</dt>
-            <dd>{{game.gils}}</dd>
+            <dd>{{game.gil}}</dd>
         </dl>
     </div>
 
