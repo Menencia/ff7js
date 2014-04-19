@@ -1,27 +1,30 @@
-class Commands {
+class Commander {
 
     /**
-     * New Commands
+     * Commands panels management
      * @param battle
      */
     constructor (battle) {
         this.battle = battle;
         this.list = [];
         this.current = null;
+        this.subcurrent = null;
         this.isActive = false;
     }
 
     /**
-     * New command into the list
-     * @param command
+     * New commandsPanel into the list
+     * @param commandsPanel
      */
-    add (command) {
-        this.list.push(command);
-        this.display();
+    add (commandsPanel) {
+        this.list.push(commandsPanel);
+        if (this.current == null) {
+            this.display();
+        }
     }
 
     /**
-     * Display the first command of the list
+     * Display the first commandsPanel of the list
      * @param i
      */
     display (i = 0) {
@@ -31,12 +34,13 @@ class Commands {
     }
 
     /**
-     * Close the current shown command
+     * Close the current shown commandsPanel
      */
     close() {
         var index = _.indexOf(this.list, this.current);
         this.list.splice(index, 1);
         this.current = null;
+        this.subcurrent = null;
         this.display();
     }
 

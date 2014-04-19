@@ -71,7 +71,9 @@ class Fighter {
     getDamaged (damages) {
         this.hp -= damages;
         this.hp = Math.max(this.hp, 0);
-        if (this.getLimit) this.getLimit(damages);
+        if (this.getLimit) {
+            this.getLimit(damages);
+        }
 
         if (this.hp === 0) {
             this.game.battle.testEnd(this.group);

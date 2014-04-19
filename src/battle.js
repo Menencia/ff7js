@@ -5,8 +5,8 @@ class Battle {
      * GroupA is at the left
      * GroupB is at the right
      * @param game
-     * @param groupA
-     * @param groupB
+     * @param groupA Array<Fighter>
+     * @param groupB Array<Fighter>
      */
     constructor (game, groupA, groupB) {
         this.game = game;
@@ -16,7 +16,7 @@ class Battle {
         this.actions = [];
         this.action = null;
         this.exp = this.gil = this.ap = 0;
-        this.commands = new Commands(this);
+        this.commander = new Commander(this);
         this.message = '';
 
         this.game.setMode('fight');
@@ -37,9 +37,9 @@ class Battle {
     run() {
         this.running = this.game.$timeout( () => {
             if (!this.pause && this.actions.length > 0) {
-                this.message = 'Attack';
                 this.pause = true;
                 this.action = this.actions.shift();
+                this.message = this.action.name;
                 this.action.exec( () => {
                     this.action.fighter.newTurn();
                     this.action = null;

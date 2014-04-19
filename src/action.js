@@ -2,14 +2,25 @@ class Action {
 
     /**
      * New Action
+     * @param name
      * @param battle
-     * @param fighter
+     * @param fighter Character|Enemy
      */
-    constructor (battle, fighter) {
+    constructor (name, battle, fighter) {
         this.battle = battle;
         this.fighter = fighter;
         this.hits = 0;
         this.targets = [];
+        this.name = name;
+        this.isLimit = false;
+    }
+
+    /**
+     * When action is selected from the command
+     */
+    use() {
+        // close command window
+        this.battle.commander.close();
     }
 
     /**
@@ -49,10 +60,15 @@ class Action {
      * Executes fn when moves finished
      */
     exec(fn) {
-        this.model.anim( this.targets, () => {
-            for (var target of this.targets) {
-                target.getDamaged(this.hits);
+        // animate the model having anim() method
+        this.animatedModel.animate( this.targets, () => {
+
+            // after animation
+            if (this.animatedModel.afterAnimate) {
+                this.animatedModel.afterAnimate();
             }
+
+            // finish turn
             fn();
         });
     }

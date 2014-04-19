@@ -1,16 +1,27 @@
-class Weapon {
+class Limit {
 
     /**
-     * New weapon
-     * @param character Character
+     * Creates new limit
+     * Only for characters
+     * @param character
      */
     constructor(character) {
-        this.game = character.game;
         this.character = character;
     }
 
     /**
-     * Animation for attack
+     * Returns random hits
+     * @returns {*}
+     */
+    getHits() {
+        var base = this.character.level * 10 + this.power;
+        var baseMin = Math.ceil((1 - 20/100) * base);
+        var baseMax = Math.ceil((1 + 20/100) * base);
+        return _.random(baseMin, baseMax);
+    }
+
+    /**
+     * Animation for liimt
      * Cloud moves his weapon, and we show the damages above the enemy (1 hit)
      * @param targets
      * @param fn
@@ -26,7 +37,7 @@ class Weapon {
         moves.push(new Move(( () => $(`.${plot} .plot`).attr('src', '/img/sprites/cloud4.png')), 50));
         moves.push(new Move(( () => $(`.${plot} .plot`).attr('src', '/img/sprites/cloud3.png')), 100));
 
-        var hits = this.character.getHits();
+        var hits = this.getHits();
         var plot2 = targets[0].plot;
 
         moves.push(new Move(( () => $(`.${plot2} .msg`).text(hits)), 0));
@@ -46,6 +57,13 @@ class Weapon {
             targets[0].getDamaged(hits);
             fn();
         });
+    }
+
+    /**
+     * Actions after the animation
+     */
+    afterAnimate() {
+        this.character.limit = 0;
     }
 
 }

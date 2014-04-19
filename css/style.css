@@ -66,6 +66,10 @@ footer a:hover {
     box-sizing: border-box;
 }
 
+.block.limit {
+    background-image: linear-gradient(150deg, #9f1305, #994e67);
+}
+
 .avatar img {
     width: 100px;
 }
@@ -224,6 +228,11 @@ footer a:hover {
 .fight .block.command {
     top: 0;
     left: 200px;
+}
+
+.fight .block.subcommand {
+    top: 10px;
+    left: 210px;
 }
 
 .fight .legend .panel {

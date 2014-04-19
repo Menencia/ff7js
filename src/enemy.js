@@ -24,10 +24,10 @@ class Enemy extends Fighter {
      * IA choose automatically a skill
      */
     exec() {
-        var action = new Action(this.game.battle, this);
+        var action = new Action('Laser Cannon', this.game.battle, this);
         action.setTargets('enemies', 'random');
         action.damages(this.getHits());
-        action.model = this;
+        action.animatedModel = this;
         this.game.battle.actions.push(action);
     }
 
@@ -37,7 +37,7 @@ class Enemy extends Fighter {
      * Animation (mover) consists of moves.
      * @param fn
      */
-    anim(targets, fn) {
+    animate(targets, fn) {
         var moves = [];
         var plot = this.plot;
 
@@ -54,9 +54,10 @@ class Enemy extends Fighter {
         moves.push(new Move(( () => $(`.${plot} .plot`).css('margin-left', '1px')), 70));
         moves.push(new Move(( () => $(`.${plot} .plot`).css('margin-left', 0)), 70));
 
+        var hits = this.getHits();
         var plot2 = targets[0].plot;
 
-        moves.push(new Move(( () => $(`.${plot2} .msg`).text(this.getHits())), 0));
+        moves.push(new Move(( () => $(`.${plot2} .msg`).text(hits)), 0));
         moves.push(new Move(( () => $(`.${plot2} .msg`).css({top: '-1px', opacity: 0.9})), 0));
         moves.push(new Move(( () => $(`.${plot2} .msg`).css({top: '-2px', opacity: 0.9})), 70));
         moves.push(new Move(( () => $(`.${plot2} .msg`).css({top: '-3px', opacity: 0.8})), 70));
@@ -69,7 +70,10 @@ class Enemy extends Fighter {
         moves.push(new Move(( () => $(`.${plot2} .msg`).css({top: '-10px', opacity: 0.5})), 70));
         moves.push(new Move(( () => $(`.${plot2} .msg`).text('')), 40));
 
-        new Mover(this.game.$timeout, moves, fn);
+        new Mover(this.game.$timeout, moves, () => {
+            targets[0].getDamaged(hits);
+            fn();
+        });
     }
 
 }
