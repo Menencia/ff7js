@@ -228,11 +228,13 @@ footer a:hover {
 .fight .block.command {
     top: 0;
     left: 200px;
+    z-index: 5;
 }
 
 .fight .block.subcommand {
     top: 10px;
     left: 210px;
+    z-index: 10;
 }
 
 .fight .legend .panel {
