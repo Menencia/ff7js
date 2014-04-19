@@ -24,7 +24,7 @@ class Game {
 
         this.$rootScope.game = this;
 
-        this.version = '0.1.1';
+        this.version = '0.1.2';
 
         // time
         this.time = 0;
