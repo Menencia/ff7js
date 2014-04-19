@@ -20,12 +20,16 @@
     <div class="block commands">
         <div class="block command" ng-show="game.battle.commander.current">
             <div ng-repeat="command in game.battle.commander.current.commands">
-                <div class="link active" ng-click="command.action.use()">{{command.name}}</div>
+                <div class="link active"
+                     ng-click="command.action.use()"
+                     ng-mouseenter="sndMove()">{{command.name}}</div>
             </div>
         </div>
         <div class="block subcommand" ng-show="game.battle.commander.subcurrent" ng-class="{limit: game.battle.commander.subcurrent.isLimit}">
             <div ng-repeat="command in game.battle.commander.subcurrent.commands">
-                <div class="link active" ng-click="command.action.use()">{{command.name}}</div>
+                <div class="link active"
+                     ng-click="command.action.use()"
+                     ng-mouseenter="sndMove()">{{command.name}}</div>
             </div>
         </div>
         <div class="legend">

@@ -65,10 +65,10 @@ class Fighter {
     }
 
     /**
-     * The enemy takes damages
+     * Fighter takes damages
      * @param damages
      */
-    getDamaged (damages) {
+    getDamaged(damages) {
         this.hp -= damages;
         this.hp = Math.max(this.hp, 0);
         if (this.getLimit) {
@@ -78,5 +78,14 @@ class Fighter {
         if (this.hp === 0) {
             this.game.battle.testEnd(this.group);
         }
+    }
+
+    /**
+     * Fighter is cured
+     * @param cures
+     */
+    getCured(cures) {
+        this.hp += cures;
+        this.hp = Math.min(this.hp, this.hpMax());
     }
 }

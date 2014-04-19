@@ -13,7 +13,9 @@ class Zone {
      */
     explore() {
         if (!this.canExplore()) return;
-        var opponents = _.sample(this.opponents(), 1)[0];
-        this.game.battle = new Battle(this.game, opponents, this.game.getTeam());
+        new Sound('/sounds/ff7ok.wav', () => {
+            var opponents = _.sample(this.opponents(), 1)[0];
+            this.game.battle = new Battle(this.game, opponents, this.game.getTeam());
+        });
     }
 }

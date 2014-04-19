@@ -27,7 +27,7 @@ class Enemy extends Fighter {
         var action = new Action('Laser Cannon', this.game.battle, this);
         action.setTargets('enemies', 'random');
         action.damages(this.getHits());
-        action.animatedModel = this;
+        action.model = this;
         this.game.battle.actions.push(action);
     }
 

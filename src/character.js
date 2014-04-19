@@ -160,6 +160,16 @@ class Character extends Fighter {
             commands.push(new Command('Attack', new WeaponAction('Attack', this.weapon)));
         }
 
+        // Items
+        var subCommands = [];
+        for (var item of this.game.items) {
+            item.character = this;
+            subCommands.push(new Command(item.name, new ItemAction(item.name, item)));
+        }
+        commands.push(new Command('Item', new SubCommandsPanel(this, subCommands)));
+
+
+
         return commands;
     }
 

@@ -21,6 +21,7 @@ class Action {
     use() {
         // close command window
         this.battle.commander.close();
+        new Sound('/sounds/ff7move.wav');
     }
 
     /**
@@ -61,11 +62,11 @@ class Action {
      */
     exec(fn) {
         // animate the model having anim() method
-        this.animatedModel.animate( this.targets, () => {
+        this.model.animate( this.targets, () => {
 
             // after animation
-            if (this.animatedModel.afterAnimate) {
-                this.animatedModel.afterAnimate();
+            if (this.model.afterAnimate) {
+                this.model.afterAnimate();
             }
 
             // finish turn

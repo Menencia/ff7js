@@ -7,7 +7,7 @@ class LimitAction extends Action {
      * @param limit Limit
      */
     constructor(name, limit) {
-        this.animatedModel = limit;
+        this.model = limit;
         var battle = limit.character.game.battle;
         var character = limit.character;
         super(name, battle, character);
@@ -22,7 +22,7 @@ class LimitAction extends Action {
 
         // register action
         this.setTargets('enemies', 'random');
-        this.damages(this.animatedModel.getHits());
+        this.damages(this.model.getHits());
         this.battle.actions.push(this);
     }
 

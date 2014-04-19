@@ -43,20 +43,12 @@ app.config(['$routeProvider',
 ]);
 
 /**
- * NAV
+ * INDEX
  */
+function IndexCtrl($scope) {
 
-function NavCtrl($scope, $location, Game) {
-
-    $scope.isActive = function(route) {
-        return route === $location.path();
-    }
-
-    /**
-     * Go to the game
-     */
-    $scope.home = function() {
-        $location.path("/home");
+    $scope.sndMove = function() {
+        new Sound('/sounds/ff7move.wav');
     };
 
 }

@@ -1,7 +1,12 @@
 class Potion extends Item {
 
-    constructor() {
+    constructor(game) {
+        super(game);
         this.name = 'Potion';
+    }
+
+    use() {
+        return 150;
     }
 
 }

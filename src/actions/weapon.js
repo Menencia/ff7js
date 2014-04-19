@@ -6,7 +6,7 @@ class WeaponAction extends Action {
      * @param weapon Weapon
      */
     constructor(name, weapon) {
-        this.animatedModel = weapon;
+        this.model = weapon;
         var battle = weapon.character.game.battle;
         var character = weapon.character;
         super(name, battle, character);
@@ -20,7 +20,7 @@ class WeaponAction extends Action {
 
         // register action
         this.setTargets('enemies', 'random');
-        this.damages(this.animatedModel.character.getHits());
+        this.damages(this.model.character.getHits());
         this.battle.actions.push(this);
     }
 

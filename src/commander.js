@@ -30,6 +30,7 @@ class Commander {
     display (i = 0) {
         if (this.list.length > 0) {
             this.current = this.list[i];
+            new Sound('/sounds/ff7ready.wav');
         }
     }
 

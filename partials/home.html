@@ -25,7 +25,10 @@
     </div>
 
     <div class="block menu">
-        <div class="menu link" ng-click="game.zone.explore()" ng-class="{active: game.zone.canExplore()}">EXPLORE</div>
+        <div class="menu link"
+             ng-click="game.zone.explore()"
+             ng-class="{active: game.zone.canExplore()}"
+             ng-mouseenter="sndMove()">EXPLORE</div>
         <div class="menu link">ITEM</div>
         <div class="menu link">MAGIC</div>
         <div class="menu link">MATERIA</div>
