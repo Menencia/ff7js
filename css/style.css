@@ -1,6 +1,4 @@
 body {
-    margin: 0;
-    padding: 0;
     color: #444;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -63,6 +61,7 @@ footer a:hover {
     background-image: linear-gradient(150deg, rgb(12, 10, 159), rgb(15,17,40));
     color: #fff;
     padding: 10px;
+    -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -146,7 +145,7 @@ footer a:hover {
     }
 
     dd {
-        width: 100px;
+        width: 99px;
         display: inline-block;
         text-align: right;
         font-weight: bold;
@@ -191,6 +190,7 @@ footer a:hover {
     display: inline-block;
     width: 400px;
     padding: 60px;
+    -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
 
