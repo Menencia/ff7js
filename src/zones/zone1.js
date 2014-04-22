@@ -5,8 +5,7 @@ class Zone1 extends Zone {
      * @param game
      */
     constructor(game) {
-        this.game = game;
-        this.name = 'Sector 1 Reactor'
+        super(game, 'Sector 1 Reactor');
     }
 
     /**
@@ -15,7 +14,7 @@ class Zone1 extends Zone {
      */
     opponents() {
         return [
-            [new FirstRay(this.game)]
+            [new FirstRay(this.game.battle)]
         ];
     }
 

@@ -5,8 +5,8 @@ class Battle {
      * GroupA is at the left
      * GroupB is at the right
      * @param game
-     * @param groupA Array<Fighter>
-     * @param groupB Array<Fighter>
+     * @param groupA {Array<Fighter>}
+     * @param groupB {Array<Fighter>}
      */
     constructor (game, groupA, groupB) {
         this.game = game;
@@ -22,17 +22,19 @@ class Battle {
         this.game.setMode('fight');
         for (var f of this.groupA) {
             f.group = 'A';
+            f.battle = this;
             f.fight();
         }
         for (var f of this.groupB) {
             f.group = 'B';
-            f.fight();
+            f.battle = this;
+            //f.fight();
         }
         this.run();
     }
 
     /**
-     * Checks and executes actions
+     * Checks and executes awaiting actions
      */
     run() {
         this.running = this.game.$timeout( () => {
@@ -40,7 +42,7 @@ class Battle {
                 this.pause = true;
                 this.action = this.actions.shift();
                 this.message = this.action.name;
-                this.action.exec( () => {
+                this.action.execute( () => {
                     this.action.fighter.newTurn();
                     this.action = null;
                     this.message = '';

@@ -1,72 +1,49 @@
 class Action {
 
     /**
-     * New Action
      * @param name
      * @param battle
-     * @param fighter Character|Enemy
+     * @param fighter Character
      */
-    constructor (name, battle, fighter) {
-        this.battle = battle;
-        this.fighter = fighter;
-        this.hits = 0;
-        this.targets = [];
+    constructor(name, fighter) {
         this.name = name;
+        this.fighter = fighter;
+        this.battle = fighter.battle;
+
         this.isLimit = false;
     }
 
     /**
-     * When action is selected from the command
+     * @param fn
+     * @override
      */
-    use() {
-        // close command window
-        this.battle.commander.close();
-        new Sound('/sounds/ff7move.wav');
+    animate(fn) {
+        this.fighter.animate(this, fn);
     }
 
     /**
-     * Assign targets
-     * @param key
+     * @override
      */
-    setTargets (type, key) {
-        var opponents;
-
-        switch (type) {
-            case 'allies':
-                opponents = this.battle['group' + this.fighter.group];
-                break;
-            case 'enemies':
-                var letter = (this.fighter.group === 'A') ? 'B': 'A';
-                opponents = this.battle['group' + letter];
-                break;
-        }
-
-        switch (key) {
-            case 'random':
-                this.targets = [_.sample(opponents)];
-                break;
-        }
-    }
+    getTargets() {}
 
     /**
-     * Set damages done by the action
+     * Calculate damages
+     * Hits can be damages or cures, or can be a text : Missed, Blocked..
+     * @param targets {Array<Fighter>}
+     * @override
      */
-    damages (hits) {
-        this.hits = hits;
-    }
+    getHits(targets) {}
 
     /**
-     * Execute an action
-     * An action is composed by moves
-     * Executes fn when moves finished
+     * @param fn
      */
-    exec(fn) {
+    execute(fn) {
         // animate the model having anim() method
-        this.model.animate( this.targets, () => {
+        this.animate( () => {
 
             // after animation
-            if (this.model.afterAnimate) {
-                this.model.afterAnimate();
+            if (this.afterAnimate) {
+                this.afterAnimate();
             }
 
             // finish turn

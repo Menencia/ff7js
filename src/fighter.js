@@ -1,11 +1,10 @@
 class Fighter {
 
     /**
-     * New Fighter
-     * @param game
+     * @param battle
      */
-    constructor (game) {
-        this.game = game;
+    constructor (battle) {
+        this.battle = battle;
         this.level = 1;
         this.atb = 0;
         this.atbMax = 4000;
@@ -42,14 +41,14 @@ class Fighter {
      * Fighting process
      */
     keepFighting() {
-        this.fighting = this.game.$timeout( () => {
-            if (this.game.mode !== 'fight') return;
+        this.fighting = this.battle.game.$timeout( () => {
+            if (this.battle == null) return;
             if (this.status === 'running') {
                 this.atb += this.delay;
                 this.atb = Math.min(this.atb, this.atbMax);
                 if (this.atb === this.atbMax) {
                     this.status = 'waiting';
-                    this.exec();
+                    this.ready();
                 }
             }
             this.keepFighting()
@@ -76,7 +75,7 @@ class Fighter {
         }
 
         if (this.hp === 0) {
-            this.game.battle.testEnd(this.group);
+            this.battle.testEnd(this.group);
         }
     }
 

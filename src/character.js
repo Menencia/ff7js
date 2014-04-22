@@ -144,41 +144,35 @@ class Character extends Fighter {
      * List of character commands
      * @returns {Array<Command>}
      */
-    getCommands() {
+    getCommands(commandsPanel) {
         var commands = [];
 
-        // Attack or limit
-        if (this.limit === this.limitMax()) {
-            var subCommands = [];
-            for (var limit of this.limits) {
-                subCommands.push(new Command(limit.name, new LimitAction(limit.name, limit)));
-            }
-            var subCommandsPanel = new SubCommandsPanel(this, subCommands);
-            subCommandsPanel.isLimit = true;
-            commands.push(new Command('Limit', subCommandsPanel));
+        // Weapon or limit
+        if (this.limit !== this.limitMax()) {
+            commands.push(new Command(this.weapon));
         } else {
-            commands.push(new Command('Attack', new WeaponAction('Attack', this.weapon)));
+            commands.push(new LimitCommandsPanel(this));
         }
 
         // Items
-        var subCommands = [];
-        for (var item of this.game.items) {
-            item.character = this;
-            subCommands.push(new Command(item.name, new ItemAction(item.name, item)));
-        }
-        commands.push(new Command('Item', new SubCommandsPanel(this, subCommands)));
-
-
+        commands.push(new ItemCommandsPanel(this));
 
         return commands;
     }
 
     /**
-     * Execute something when atb is full
-     * Creating a commands panel awaiting for the player to choose a skill
+     * Character ready to accept commands
      */
-    exec() {
-        this.game.battle.commander.add(new CommandsPanel(this, this.getCommands()));
+    ready() {
+        new CharacterCommander(this, new CommandsPanel(this, this.getCommands()));
+    }
+
+    /**
+     * @param targets {Array<Fighter>}
+     * @param fn
+     */
+    animate(targets, fn) {
+        this.weapon.animate();
     }
 
 }

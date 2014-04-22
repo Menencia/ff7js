@@ -1,43 +1,34 @@
 class Enemy extends Fighter {
 
     /**
-     * New Enemy
      * @param game
      */
-    constructor (game) {
-        super(game);
+    constructor(battle) {
+        super(battle);
     }
 
     /**
-     * Returns random hits
-     * @returns {*}
+     * Ready to attack (IA)
      */
-    getHits() {
-        var base = this.strength;
-        var baseMin = Math.ceil((1 - 20/100) * base);
-        var baseMax = Math.ceil((1 + 20/100) * base);
-        return _.random(baseMin, baseMax);
+    ready() {
+        this.battle.actions.push(this);
+    }
+
+    execute(fn) {
+        if (this.action != null) {
+            this.action(fn);
+        } else {
+            fn();
+        }
     }
 
     /**
-     * Execute something when atb is full
-     * IA choose automatically a skill
-     */
-    exec() {
-        var action = new Action('Laser Cannon', this.game.battle, this);
-        action.setTargets('enemies', 'random');
-        action.damages(this.getHits());
-        action.model = this;
-        this.game.battle.actions.push(action);
-    }
-
-    /**
-     * /**
-     * Animation for attack
-     * Animation (mover) consists of moves.
+     * Animation attack
+     * @param action
      * @param fn
+     * @override
      */
-    animate(targets, fn) {
+    animate(action, fn) {
         var moves = [];
         var plot = this.plot;
 
@@ -54,26 +45,7 @@ class Enemy extends Fighter {
         moves.push(new Move(( () => $(`.${plot} .plot`).css('margin-left', '1px')), 70));
         moves.push(new Move(( () => $(`.${plot} .plot`).css('margin-left', 0)), 70));
 
-        var hits = this.getHits();
-        var plot2 = targets[0].plot;
-
-        moves.push(new Move(( () => $(`.${plot2} .msg`).text(hits)), 0));
-        moves.push(new Move(( () => $(`.${plot2} .msg`).css({top: '-1px', opacity: 0.9})), 0));
-        moves.push(new Move(( () => $(`.${plot2} .msg`).css({top: '-2px', opacity: 0.9})), 70));
-        moves.push(new Move(( () => $(`.${plot2} .msg`).css({top: '-3px', opacity: 0.8})), 70));
-        moves.push(new Move(( () => $(`.${plot2} .msg`).css({top: '-4px', opacity: 0.8})), 70));
-        moves.push(new Move(( () => $(`.${plot2} .msg`).css({top: '-5px', opacity: 0.7})), 70));
-        moves.push(new Move(( () => $(`.${plot2} .msg`).css({top: '-6px', opacity: 0.7})), 70));
-        moves.push(new Move(( () => $(`.${plot2} .msg`).css({top: '-7px', opacity: 0.6})), 70));
-        moves.push(new Move(( () => $(`.${plot2} .msg`).css({top: '-8px', opacity: 0.6})), 70));
-        moves.push(new Move(( () => $(`.${plot2} .msg`).css({top: '-9px', opacity: 0.5})), 70));
-        moves.push(new Move(( () => $(`.${plot2} .msg`).css({top: '-10px', opacity: 0.5})), 70));
-        moves.push(new Move(( () => $(`.${plot2} .msg`).text('')), 40));
-
-        new Mover(this.game.$timeout, moves, () => {
-            targets[0].getDamaged(hits);
-            fn();
-        });
+        new Mover(this.battle.game.$timeout, moves, fn);
     }
 
 }

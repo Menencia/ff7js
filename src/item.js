@@ -1,7 +1,6 @@
 class Item {
 
     /**
-     * New item
      * @param game
      */
     constructor(game) {

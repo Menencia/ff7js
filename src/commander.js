@@ -1,13 +1,19 @@
 class Commander {
 
     /**
-     * Commands panels management
+     * CommandsPanels management
      * @param battle
      */
-    constructor (battle) {
+    constructor(battle) {
         this.battle = battle;
         this.list = [];
+
+        /**
+         *
+         * @type {CharacterCommander|null}
+         */
         this.current = null;
+
         this.subcurrent = null;
         this.isActive = false;
     }
@@ -16,7 +22,7 @@ class Commander {
      * New commandsPanel into the list
      * @param commandsPanel
      */
-    add (commandsPanel) {
+    add(commandsPanel) {
         this.list.push(commandsPanel);
         if (this.current == null) {
             this.display();
@@ -27,7 +33,7 @@ class Commander {
      * Display the first commandsPanel of the list
      * @param i
      */
-    display (i = 0) {
+    display(i = 0) {
         if (this.list.length > 0) {
             this.current = this.list[i];
             new Sound('/sounds/ff7ready.wav');

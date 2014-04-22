@@ -1,5 +1,10 @@
 class Zone {
 
+    constructor(game, name) {
+        this.game = game;
+        this.name = name;
+    }
+
     /**
      * Returns true if fighting is possible
      * @returns {boolean}
