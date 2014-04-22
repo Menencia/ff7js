@@ -14,6 +14,9 @@ class Enemy extends Fighter {
         this.battle.actions.push(this);
     }
 
+    /**
+     * @param fn
+     */
     execute(fn) {
         if (this.action != null) {
             this.action(fn);
@@ -23,12 +26,9 @@ class Enemy extends Fighter {
     }
 
     /**
-     * Animation attack
-     * @param action
-     * @param fn
-     * @override
+     * @returns {Array<Move>}
      */
-    animate(action, fn) {
+    animate() {
         var moves = [];
         var plot = this.plot;
 
@@ -45,7 +45,7 @@ class Enemy extends Fighter {
         moves.push(new Move(( () => $(`.${plot} .plot`).css('margin-left', '1px')), 70));
         moves.push(new Move(( () => $(`.${plot} .plot`).css('margin-left', 0)), 70));
 
-        new Mover(this.battle.game.$timeout, moves, fn);
+        return moves;
     }
 
 }

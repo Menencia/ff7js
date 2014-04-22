@@ -1,26 +1,51 @@
 class Mover {
 
     /**
-     * New Mover
+     * @param $timeout
      */
-    constructor ($timeout, moves, fn) {
+    constructor ($timeout) {
         this.$timeout = $timeout;
-        this.moves = moves;
-        this.fn = fn;
-        this.run();
+        this.list = [];
     }
 
     /**
-     * Run the mover
+     * @param moves {Move|Array<Move>}
      */
-    run() {
-        if (this.moves.length === 0) {
-            this.fn();
-        } else {
-            var move = this.moves.shift();
+    add(moves) {
+        if (!_.isArray(moves)) {
+            moves = [moves];
+        }
+        for (var move of moves) {
+            this.list.push([move]);
+        }
+    }
+
+    /**
+     * @param moves
+     */
+    addMultiple(moves) {
+        this.list.push(moves);
+    }
+
+    /**
+     * @param fn
+     * @returns {*}
+     */
+    run(fn) {
+        if (this.list.length === 0) {
+            return fn();
+        }
+
+        var moves = this.list.shift();
+        this.tokens = moves.length;
+
+        for (var move of moves) {
             this.$timeout( () => {
                 move.fn();
-                this.run();
+                this.tokens--;
+                if (this.tokens == 0) {
+                    this.run(fn);
+                }
             }, move.ms);
         }
     }

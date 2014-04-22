@@ -24,28 +24,30 @@ class FirstRay extends Enemy {
     }
 
     /**
-     *
+     * @param fn
      */
     execute(fn) {
-        this.fn = fn;
         if (this.count == 0) {
             this.action = this.laserCannon;
             this.count = 1;
         } else {
             this.count = 0;
         }
-        super(fn);
+        super.execute(fn);
     }
 
     /**
-     *
+     * @param fn
      */
     laserCannon(fn) {
-        this.animate( () => {
-            var target = _.sample(this.battle.groupB);
-            var hits = target.getDamaged(10);
-            target.animate(hits, fn);
-        });
+        var target = _.sample(this.battle.groupB);
+        var move = new Mover(this.battle.game.$timeout);
+        move.add(new Move( () => {this.battle.message = 'Laser Cannon';}, 0));
+        move.add(this.animate());
+        move.add(target.getDamaged(10));
+        move.add(new Move( () => {this.battle.message = '';}, 0));
+        move.run(fn);
     }
+
 
 }

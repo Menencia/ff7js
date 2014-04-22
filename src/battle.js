@@ -40,12 +40,9 @@ class Battle {
         this.running = this.game.$timeout( () => {
             if (!this.pause && this.actions.length > 0) {
                 this.pause = true;
-                this.action = this.actions.shift();
-                this.message = this.action.name;
-                this.action.execute( () => {
-                    this.action.fighter.newTurn();
-                    this.action = null;
-                    this.message = '';
+                var fighter = this.actions.shift();
+                fighter.execute( () => {
+                    fighter.newTurn();
                     this.pause = false;
                 });
             }
