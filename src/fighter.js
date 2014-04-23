@@ -83,7 +83,7 @@ class Fighter {
         }
 
         if (this.hp === 0) {
-            this.battle.testEnd(this.group);
+            // todo death animation
         }
 
         var battle = this.battle;
