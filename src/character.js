@@ -4,22 +4,12 @@ class Character extends Fighter {
      * @param game
      */
     constructor(game) {
-        super(game);
+        super(game.battle);
+        this.game = game;
         this.exp = 0;
         this.expMax = 100;
         this.expTotal = 0;
         this.limit = 0;
-    }
-
-    /**
-     * Returns random hits
-     * @returns {*}
-     */
-    getHits() {
-        var base = this.weapon.power + this.level * 10;
-        var baseMin = Math.ceil((1 - 20/100) * base);
-        var baseMax = Math.ceil((1 + 20/100) * base);
-        return _.random(baseMin, baseMax);
     }
 
     /**
@@ -149,13 +139,13 @@ class Character extends Fighter {
 
         // Weapon or limit
         if (this.limit !== this.limitMax()) {
-            commands.push(new Command(this.weapon));
+            commands.push(new AttackCommand(this));
         } else {
-            commands.push(new LimitCommandsPanel(this));
+            //commands.push(new LimitCommandsPanel(this));
         }
 
         // Items
-        commands.push(new ItemCommandsPanel(this));
+        //commands.push(new ItemCommandsPanel(this));
 
         return commands;
     }
@@ -164,15 +154,20 @@ class Character extends Fighter {
      * Character ready to accept commands
      */
     ready() {
-        new CharacterCommander(this, new CommandsPanel(this, this.getCommands()));
+        this.battle.commander.add(
+            new CharacterCommander(this, new CommandsPanel(this, this.getCommands()))
+        );
     }
 
     /**
-     * @param targets {Array<Fighter>}
      * @param fn
      */
-    animate(targets, fn) {
-        this.weapon.animate();
+    execute(fn) {
+        if (this.action != null) {
+            this.action.execute(fn);
+        } else {
+            fn();
+        }
     }
 
 }

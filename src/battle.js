@@ -23,12 +23,12 @@ class Battle {
         for (var f of this.groupA) {
             f.group = 'A';
             f.battle = this;
-            f.fight();
+            //f.fight();
         }
         for (var f of this.groupB) {
             f.group = 'B';
             f.battle = this;
-            //f.fight();
+            f.fight();
         }
         this.run();
     }
@@ -40,9 +40,9 @@ class Battle {
         this.running = this.game.$timeout( () => {
             if (!this.pause && this.actions.length > 0) {
                 this.pause = true;
-                var fighter = this.actions.shift();
-                fighter.execute( () => {
-                    fighter.newTurn();
+                var action = this.actions.shift();
+                action.execute( () => {
+                    action.fighter.newTurn();
                     this.pause = false;
                 });
             }

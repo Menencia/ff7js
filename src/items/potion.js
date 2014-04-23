@@ -6,7 +6,7 @@ class Potion extends Item {
     }
 
     use() {
-        return 150;
+        this.character.hp += 150;
     }
 
 }

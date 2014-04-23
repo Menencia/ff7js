@@ -66,9 +66,9 @@ class Fighter {
     /**
      * Fighter receives damages
      * @param damages
-     * @returns {Array<Move>}
+     * @returns {Animator}
      */
-    getDamaged(damages) {
+    getDamagedAnimator(damages) {
         this.hp -= damages;
         this.hp = Math.max(this.hp, 0);
         if (this.getLimit) {
@@ -79,23 +79,24 @@ class Fighter {
             this.battle.testEnd(this.group);
         }
 
+        var battle = this.battle;
         var plot = this.plot;
-        var moves = [];
+        var animator = new Animator();
 
-        moves.push(new Move(( () => $(`.${plot} .msg`).text(damages)), 0));
-        moves.push(new Move(( () => $(`.${plot} .msg`).css({top: '-1px', opacity: 0.9})), 0));
-        moves.push(new Move(( () => $(`.${plot} .msg`).css({top: '-2px', opacity: 0.9})), 70));
-        moves.push(new Move(( () => $(`.${plot} .msg`).css({top: '-3px', opacity: 0.8})), 70));
-        moves.push(new Move(( () => $(`.${plot} .msg`).css({top: '-4px', opacity: 0.8})), 70));
-        moves.push(new Move(( () => $(`.${plot} .msg`).css({top: '-5px', opacity: 0.7})), 70));
-        moves.push(new Move(( () => $(`.${plot} .msg`).css({top: '-6px', opacity: 0.7})), 70));
-        moves.push(new Move(( () => $(`.${plot} .msg`).css({top: '-7px', opacity: 0.6})), 70));
-        moves.push(new Move(( () => $(`.${plot} .msg`).css({top: '-8px', opacity: 0.6})), 70));
-        moves.push(new Move(( () => $(`.${plot} .msg`).css({top: '-9px', opacity: 0.5})), 70));
-        moves.push(new Move(( () => $(`.${plot} .msg`).css({top: '-10px', opacity: 0.5})), 70));
-        moves.push(new Move(( () => $(`.${plot} .msg`).text('')), 40));
+        animator.add(new Animation(battle, ( () => $(`.${plot} .msg`).text(damages)), 0));
+        animator.add(new Animation(battle, ( () => $(`.${plot} .msg`).css({top: '-1px', opacity: 0.9})), 0));
+        animator.add(new Animation(battle, ( () => $(`.${plot} .msg`).css({top: '-2px', opacity: 0.9})), 70));
+        animator.add(new Animation(battle, ( () => $(`.${plot} .msg`).css({top: '-3px', opacity: 0.8})), 70));
+        animator.add(new Animation(battle, ( () => $(`.${plot} .msg`).css({top: '-4px', opacity: 0.8})), 70));
+        animator.add(new Animation(battle, ( () => $(`.${plot} .msg`).css({top: '-5px', opacity: 0.7})), 70));
+        animator.add(new Animation(battle, ( () => $(`.${plot} .msg`).css({top: '-6px', opacity: 0.7})), 70));
+        animator.add(new Animation(battle, ( () => $(`.${plot} .msg`).css({top: '-7px', opacity: 0.6})), 70));
+        animator.add(new Animation(battle, ( () => $(`.${plot} .msg`).css({top: '-8px', opacity: 0.6})), 70));
+        animator.add(new Animation(battle, ( () => $(`.${plot} .msg`).css({top: '-9px', opacity: 0.5})), 70));
+        animator.add(new Animation(battle, ( () => $(`.${plot} .msg`).css({top: '-10px', opacity: 0.5})), 70));
+        animator.add(new Animation(battle, ( () => $(`.${plot} .msg`).text('')), 40));
 
-        return moves;
+        return animator;
     }
 
     /**

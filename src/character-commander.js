@@ -22,7 +22,7 @@ class CharacterCommander {
     /**
      * @param commandsPanel {CommandsPanel}
      */
-    add(commandsPanel) {
+    select(commandsPanel) {
         this.panels.push(commandsPanel);
     }
 

@@ -1,15 +1,14 @@
-class Mover {
+class Animator {
 
     /**
-     * @param $timeout
+     *
      */
-    constructor ($timeout) {
-        this.$timeout = $timeout;
+    constructor() {
         this.list = [];
     }
 
     /**
-     * @param moves {Move|Array<Move>}
+     * @param moves {Animation|Animator}
      */
     add(moves) {
         if (!_.isArray(moves)) {
@@ -21,7 +20,7 @@ class Mover {
     }
 
     /**
-     * @param moves
+     * @param moves {Array<Animation>|Array<Animator>}
      */
     addMultiple(moves) {
         this.list.push(moves);
@@ -36,17 +35,22 @@ class Mover {
             return fn();
         }
 
-        var moves = this.list.shift();
-        this.tokens = moves.length;
+        var node = this.list.shift();
+        this.tokens = node.length;
 
-        for (var move of moves) {
-            this.$timeout( () => {
-                move.fn();
-                this.tokens--;
-                if (this.tokens == 0) {
+        /**
+         * {Animation|Animator}
+         */
+        var a;
+
+        for (a of node) {
+
+            a.run( () => {
+                if (--this.tokens === 0) {
                     this.run(fn);
                 }
-            }, move.ms);
+            });
+
         }
     }
 

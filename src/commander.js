@@ -13,8 +13,6 @@ class Commander {
          * @type {CharacterCommander|null}
          */
         this.current = null;
-
-        this.subcurrent = null;
         this.isActive = false;
     }
 
