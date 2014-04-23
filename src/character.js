@@ -17,16 +17,16 @@ class Character extends Fighter {
      * @param damages
      */
     getLimit(damages) {
-        this.limit += Math.ceil(damages);
+        this.limit += Math.ceil(damages) *1000;
         this.limit = Math.min(this.limit, this.limitMax());
 
         // search if there's an action awaiting
         if (this.limitFull()) {
             var current = (this.game.battle.commander.current != null) ? [this.game.battle.commander.current]: [];
-            var commandsPanels = _.union(this.game.battle.commander.list, current);
-            var commandsPanel = _.findWhere(commandsPanels, {character: this});
-            if (commandsPanel) {
-                commandsPanel.commands = this.getCommands();
+            var characterCommanders = _.union(this.game.battle.commander.list, current);
+            var characterCommander = _.findWhere(characterCommanders, {character: this});
+            if (characterCommander) {
+                characterCommander.panels[0].commands = this.getCommands();
             }
         }
     }
@@ -141,7 +141,7 @@ class Character extends Fighter {
         if (this.limit !== this.limitMax()) {
             commands.push(new AttackCommand(this));
         } else {
-            //commands.push(new LimitCommandsPanel(this));
+            commands.push(new LimitCommandsPanel(this));
         }
 
         // Items

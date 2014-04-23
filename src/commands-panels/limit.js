@@ -1,4 +1,4 @@
-class LimitPanelCommand extends Command {
+class LimitCommandsPanel extends CommandsPanel {
 
     /**
      * @param character
@@ -9,6 +9,13 @@ class LimitPanelCommand extends Command {
             commands.push(new LimitCommand(limit));
         }
         super(character, commands);
+    }
+
+    /**
+     * @returns {string}
+     */
+    getName() {
+        return "Limit";
     }
 
 }

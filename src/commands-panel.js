@@ -13,7 +13,7 @@ class CommandsPanel {
      *
      */
     select() {
-        this.character.game.battle.commander.current.add(this);
+        this.character.game.battle.commander.current.select(this);
     }
 
 }
