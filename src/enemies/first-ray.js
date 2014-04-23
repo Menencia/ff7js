@@ -24,16 +24,17 @@ class FirstRay extends Enemy {
     }
 
     /**
+     * @param targets
      * @param fn
      */
-    execute(fn) {
+    execute(targets, fn) {
         if (this.count == 0) {
             this.action = this.laserCannon;
             this.count = 1;
         } else {
             this.count = 0;
         }
-        super.execute(fn);
+        super.execute(targets, fn);
     }
 
     /**
@@ -41,12 +42,16 @@ class FirstRay extends Enemy {
      */
     laserCannon(fn) {
         var target = _.sample(this.battle.groupB);
-        var move = new Mover(this.battle.game.$timeout);
-        move.add(new Move( () => {this.battle.message = 'Laser Cannon';}, 0));
-        move.add(this.animate());
-        move.add(target.getDamaged(10));
-        move.add(new Move( () => {this.battle.message = '';}, 0));
-        move.run(fn);
+        this.animate( () => {
+
+            var animator = new Animator();
+
+            // 1 hit to 1 target
+            animator.add(target.getDamagedAnimator(10));
+
+            animator.run(fn);
+        });
+
     }
 
 

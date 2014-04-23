@@ -23,7 +23,7 @@ class Battle {
         for (var f of this.groupA) {
             f.group = 'A';
             f.battle = this;
-            //f.fight();
+            f.fight();
         }
         for (var f of this.groupB) {
             f.group = 'B';
