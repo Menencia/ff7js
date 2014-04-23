@@ -13,6 +13,13 @@ class Fighter {
     }
 
     /**
+     * @returns {string}
+     */
+    getName() {
+        return this.name;
+    }
+
+    /**
      * Returns calculated total HP
      * @returns {number}
      */

@@ -12,7 +12,8 @@ class TargetCommand extends Command {
      * Select Target, Then close current Character Commander
      */
     select() {
-        this.character.battle.commander.current.setTargets(this.model);
+        this.character.battle.commander.current.action.targets = this.model;
+        this.character.battle.actions.push(this.character.battle.commander.current.action);
         this.character.battle.commander.close();
     }
 

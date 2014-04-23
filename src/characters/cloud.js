@@ -5,7 +5,8 @@ class Cloud extends Character {
      * @param game
      */
     constructor (game) {
-        this.name = 'Cloud Strife';
+        this.name = 'Cloud';
+        this.lastname = 'Strife';
         this.image = '/img/characters/cloud.png';
         this.plot = 'cloud';
         this.limitLevel = 1;

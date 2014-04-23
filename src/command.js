@@ -30,7 +30,7 @@ class Command {
      * When command is selected, open the targets panel
      */
     select() {
-        this.battle.commander.current.action = new Action(this.character, this.model);
+        this.battle.commander.current.action = new Action(this.model, this.character);
         this.battle.commander.current.select(new TargetsCommandsPanel(this.model));
     }
 

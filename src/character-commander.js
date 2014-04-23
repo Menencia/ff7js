@@ -17,6 +17,11 @@ class CharacterCommander {
          * @type {Array<CommandsPanel>}
          */
         this.panels = [commandsPanel];
+
+        /**
+         * @type {Action}
+         */
+        this.action = null;
     }
 
     /**

@@ -21,11 +21,11 @@ class Weapon {
      */
     getTargetCommands() {
         var targets = [];
-        for (var f in this.game.battle.groupB) {
-            targets.push(new TargetCommand(f));
+        for (var f of this.game.battle.groupB) {
+            targets.push(new TargetCommand(f, this.character));
         }
-        for (var f in this.game.battle.groupA) {
-            targets.push(new TargetCommand(f));
+        for (var f of this.game.battle.groupA) {
+            targets.push(new TargetCommand(f, this.character));
         }
         return targets;
     }
@@ -33,16 +33,16 @@ class Weapon {
     /**
      * @param fn
      */
-    execute(fn) {
-        var $timeout = this.fighter.battle.game.$timeout;
+    execute(targets, fn) {
+        var $timeout = this.game.$timeout;
 
-        this.model.animate( () => {
+        this.animate( () => {
 
             var animator = new Animator();
 
             // 1 hit to 1 target
-            var hits = this.model.getHits();
-            animator.add(this.targets.getDamagedAnimator(hits));
+            var hits = this.getHits();
+            animator.add(targets[0].getDamagedAnimator(hits));
 
             animator.run( fn );
         });
