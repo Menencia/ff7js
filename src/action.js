@@ -11,6 +11,13 @@ class Action {
     }
 
     /**
+     *
+     */
+    isLimit() {
+        return this.model
+    }
+
+    /**
      * @param targets
      */
     set targets(targets) {

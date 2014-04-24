@@ -18,7 +18,7 @@
     </div>
 
     <div class="block commands">
-        <div class="block command" ng-show="game.battle.commander.current" ng-repeat="commandsPanel in game.battle.commander.current.panels">
+        <div class="block command" ng-show="game.battle.commander.current" ng-repeat="commandsPanel in game.battle.commander.current.panels" ng-class="{limit: commandsPanel.isLimit}">
             <div ng-repeat="command in commandsPanel.commands">
                 <div class="link active"
                      ng-click="command.select()"
