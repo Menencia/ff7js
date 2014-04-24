@@ -42,6 +42,9 @@ class FirstRay extends Enemy {
      */
     laserCannon(fn) {
         var target = _.sample(this.battle.groupB);
+
+        this.battle.message = 'Laser Cannon';
+
         this.animate( () => {
 
             var animator = new Animator();
@@ -49,7 +52,11 @@ class FirstRay extends Enemy {
             // 1 hit to 1 target
             animator.add(target.getDamagedAnimator(10));
 
-            animator.run(fn);
+            animator.run( () => {
+
+                this.battle.message = '';
+                fn();
+            });
         });
 
     }

@@ -17,7 +17,7 @@ class Character extends Fighter {
      * @param damages
      */
     getLimit(damages) {
-        this.limit += Math.ceil(damages) *1000;
+        this.limit += Math.ceil(damages);
         this.limit = Math.min(this.limit, this.limitMax());
 
         // search if there's an action awaiting

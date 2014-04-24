@@ -36,6 +36,8 @@ class Weapon {
     execute(targets, fn) {
         var $timeout = this.game.$timeout;
 
+        this.game.battle.message = this.getName();
+
         this.animate( () => {
 
             var animator = new Animator();
@@ -44,7 +46,11 @@ class Weapon {
             var hits = this.getHits();
             animator.add(targets[0].getDamagedAnimator(hits));
 
-            animator.run( fn );
+            animator.run( () => {
+
+                this.game.battle.message = '';
+                fn();
+            });
         });
 
     }
