@@ -45,6 +45,8 @@ class Braver extends Limit {
     execute(targets, fn) {
         var $timeout = this.character.game.$timeout;
 
+        this.character.battle.message = this.getName();
+
         this.animate( () => {
 
             // reset limit bar
@@ -56,7 +58,11 @@ class Braver extends Limit {
             var hits = this.getHits();
             animator.add(targets[0].getDamagedAnimator(hits));
 
-            animator.run( fn );
+            animator.run( () => {
+
+                this.character.battle.message = '';
+                fn();
+            });
         });
     }
 

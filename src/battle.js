@@ -44,15 +44,15 @@ class Battle {
                 this.pause = true;
 
                 // get next action
-                var action = this.actions.shift();
+                this.action = this.actions.shift();
 
                 // and do it
-                action.execute( () => {
+                this.action.execute( () => {
 
                     // pause over
                     this.pause = false;
                     // and show goes on
-                    action.fighter.newTurn();
+                    this.action.fighter.newTurn();
 
                     // test end of game
                     if (this.testEnd()) {
