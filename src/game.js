@@ -58,6 +58,13 @@ class Game {
             .addItem(new Potion(this));
 
         this.zone = new Zone1(this);
+
+        this.loaded = true;
+
+        new Sound('/sounds/ff7ok.wav', () => {
+            this.setMode('home');
+        });
+
     }
 
     /**

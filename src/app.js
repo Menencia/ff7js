@@ -20,6 +20,10 @@ app.config(['$routeProvider',
     function($routeProvider) {
 
         $routeProvider.
+            when('/game-start', {
+                templateUrl: 'partials/game-start.html',
+                controller: GameStartCtrl
+            }).
             when('/home', {
                 templateUrl: 'partials/home.html',
                 controller: HomeCtrl
@@ -37,7 +41,7 @@ app.config(['$routeProvider',
                 controller: GameOverCtrl
             }).
             otherwise({
-                redirectTo: '/home'
+                redirectTo: '/game-start'
             });
     }
 ]);
@@ -54,10 +58,20 @@ function IndexCtrl($scope) {
 }
 
 /**
+ * /start screen
+ */
+function GameStartCtrl($scope, Game) {
+    $scope.game = Game;
+}
+
+/**
  * /game
  */
-function HomeCtrl(Game) {
-    Game.load();
+function HomeCtrl($scope, $location, Game) {
+    if (!Game.loaded) {
+        $location.path('/game-start');
+    }
+    $scope.game = Game;
 }
 
 /**

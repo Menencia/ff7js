@@ -65,6 +65,11 @@ footer a:hover {
     box-sizing: border-box;
 }
 
+.block.transparent {
+    border: none;
+    background: none;
+}
+
 .block.limit {
     background-image: linear-gradient(150deg, #9f1305, #994e67);
 }
@@ -387,6 +392,19 @@ footer a:hover {
     right: 0;
     width: 100px;
     height: 50px;
+}
+
+/* SCREEN GAME START */
+
+.game-start {
+    width: 800px;
+    height: 640px;
+    background: url(/img/game-start.jpg) no-repeat;
+}
+
+.game-start .actions {
+    top: 245px;
+    left: 330px;
 }
 
 /* SCREEN GAME OVER */
