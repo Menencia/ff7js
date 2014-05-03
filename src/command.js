@@ -31,7 +31,7 @@ class Command {
      */
     select() {
         this.battle.commander.current.action = new Action(this.model, this.character);
-        this.battle.commander.current.select(new TargetsCommandsPanel(this.model));
+        this.battle.commander.current.select(new TargetsCommandsPanel(this.model, this.character));
     }
 
 }

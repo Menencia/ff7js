@@ -54,8 +54,8 @@ class Game {
 
         this
             .addCharacter(cloud)
-            .addItem(new Potion())
-            .addItem(new Potion());
+            .addItem(new Potion(this))
+            .addItem(new Potion(this));
 
         this.zone = new Zone1(this);
     }

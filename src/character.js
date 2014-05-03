@@ -145,7 +145,7 @@ class Character extends Fighter {
         }
 
         // Items
-        //commands.push(new ItemCommandsPanel(this));
+        commands.push(new ItemCommandsPanel(this));
 
         return commands;
     }

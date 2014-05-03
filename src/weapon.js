@@ -24,18 +24,14 @@ class Weapon {
         for (var f of this.game.battle.groupB) {
             targets.push(new TargetCommand(f, this.character));
         }
-        for (var f of this.game.battle.groupA) {
-            targets.push(new TargetCommand(f, this.character));
-        }
         return targets;
     }
 
     /**
+     * @param targets
      * @param fn
      */
     execute(targets, fn) {
-        var $timeout = this.game.$timeout;
-
         this.game.battle.message = this.getName();
 
         this.animate( () => {

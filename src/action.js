@@ -7,6 +7,7 @@ class Action {
     constructor(model, fighter) {
         this.fighter = fighter;
         this.model = model;
+        this.model.character = fighter;
         this._targets = null;
     }
 
