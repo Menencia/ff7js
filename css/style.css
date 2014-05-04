@@ -63,6 +63,12 @@ footer a:hover {
     padding: 10px;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    height: 50px;
+}
+
+.block.center {
+    top: 50%;
+    left: 50%;
 }
 
 .block.transparent {
@@ -76,6 +82,10 @@ footer a:hover {
 
 .avatar img {
     width: 100px;
+}
+
+.yellow {
+    color: rgb(214,213,78);
 }
 
 /** SCREEN HOME **/
@@ -179,6 +189,51 @@ footer a:hover {
     width: 400px;
     z-index: 2;
 }
+
+/** SCREEN SAVE **/
+
+.block.subtitle {
+    width: 500px;
+}
+
+.block.empty {
+    left: 500px;
+    width: 150px;
+}
+
+.block.title {
+    left: 650px;
+    width: 150px;
+}
+
+.block.bsave {
+    width: 800px;
+    height: 150px;
+}
+
+.screen.save .block.infos1 {
+    top: 0;
+    right: 200px;
+    width: 200px;
+    height: 100px;
+}
+
+.screen.save .block.infos2 {
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 100px;
+}
+
+.screen.save .block.zone {
+    bottom: 0;
+    right: 0;
+    width: 400px;
+}
+
+.block.bsave:nth-of-type(4) {top: 50px;}
+.block.bsave:nth-of-type(5) {top: 200px;}
+.block.bsave:nth-of-type(6) {top: 350px;}
 
 /** SCREEN FIGHT **/
 

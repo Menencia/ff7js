@@ -1,0 +1,32 @@
+<div class="screen save">
+
+    <div class="block subtitle">Select a file.</div>
+    <div class="block empty"></div>
+    <div class="block title">Load</div>
+
+    <div class="block bsave" ng-click="game.chooseLoad($index+1)" ng-repeat="save in game.saves">
+        <div ng-show="save.empty">EMPTY</div>
+        <div ng-hide="save.empty">
+            <div class="part avatar" ng-repeat="character in save.characters">
+                <img ng-src="{{character.image}}" />
+            </div>
+            <div class="block transparent infos1">
+                {{save.characters[0].name}}<br /><br />
+                Niveau {{save.characters[0].level}}
+            </div>
+            <div class="block infos2">
+                Time {{save.time}}<br />
+                Gil {{save.gil}}
+            </div>
+            <div class="block zone"></div>
+        </div>
+    </div>
+    <div class="block center confirm" ng-show="game.currentLoad > 0">
+        Are you sure you want to load?
+        <div class="link active default"
+                ng-click="game.load(true)">Yes</div>
+        <div class="link active"
+                ng-click="game.load(false)">No</div>
+    </div>
+
+</div>

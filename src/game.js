@@ -17,7 +17,7 @@ class Game {
 
         this._id = _.uniqueId();
         this.mode = 'home';
-        this.gil = 200
+        this.gil = 200;
 
         this.characters = [];
         this.items = [];
@@ -26,24 +26,18 @@ class Game {
 
         this.version = '0.1.2';
 
+        this.saves = [];
+        for (var i = 1; i <= 3; i++) {
+            var s = localStorage['save' + i];
+            var save = (s) ? JSON.parse(s): {empty: true};
+            this.saves.push(save);
+        }
+        this.currentSave = 0;
+        this.currentLoad = 0;
+
         // time
         this.time = 0;
         this.run();
-    }
-
-    /**
-     * Load new/saved game
-     */
-    load() {
-        if (!this.loaded) {
-            this.loaded = true;
-            var save = this.$cookieStore.get('game');
-            if (save) {
-                this.extend(save);
-            } else {
-                this.newGame();
-            }
-        }
     }
 
     /**
@@ -148,6 +142,102 @@ class Game {
      */
     getRewards() {
         this.setMode('home');
+    }
+
+    /**
+     * Go to load screen
+     */
+    goLoadScreen() {
+        this.setMode('load');
+    }
+
+    /**
+     * Go to save screen
+     */
+    goSave() {
+        this.setMode('save');
+    }
+
+    /**
+     *
+     */
+    chooseSave(num) {
+        this.currentSave = num;
+    }
+
+    /**
+     *
+     */
+    chooseLoad(num) {
+        this.currentLoad = num;
+    }
+
+    /**
+     * @param confirm
+     */
+    save(confirm) {
+        if (!confirm) {
+            this.currentSave = 0;
+            return;
+        }
+
+        var s = this.export();
+        localStorage['save' + this.currentSave] = JSON.stringify(s);
+        this.saves[this.currentSave - 1] = s;
+
+        this.currentSave = 0;
+    }
+
+    /**
+     * @param confirm
+     */
+    load(confirm) {
+        if (!confirm) {
+            this.currentLoad = 0;
+            return;
+        }
+
+        var save = JSON.parse(localStorage['save' + this.currentLoad]);
+        this.extend(save);
+
+        this.loaded = true;
+        this.currentLoad = 0;
+
+        this.setMode('home');
+    }
+
+    /**
+     * @param save
+     */
+    extend(save) {
+        for (c of this.save.characters) {
+            this.characters.push(new Character().extend(c));
+        }
+        this.time = save.time;
+        this.gil = save.gil;
+    }
+
+    /**
+     * @returns {*}
+     */
+    getSaves() {
+        return this.saves;
+    }
+
+    /**
+     * @returns {{characters: Array, gils: *, time: (*|time)}}
+     */
+    export() {
+        var characters = [];
+        for (var c of this.characters) {
+            characters.push(c.export());
+        }
+
+        return {
+            characters: characters,
+            gils: this.gil,
+            time: this.time
+        };
     }
 
 }

@@ -12,6 +12,10 @@ class Character extends Fighter {
         this.limit = 0;
     }
 
+    extend(save) {
+        this.
+    }
+
     /**
      * Increase limit bar
      * @param damages
@@ -168,6 +172,13 @@ class Character extends Fighter {
         } else {
             fn();
         }
+    }
+
+    /**
+     * @returns {Array}
+     */
+    export() {
+        return _.pick(this, 'name', 'image', 'level');
     }
 
 }

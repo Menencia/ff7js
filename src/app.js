@@ -40,6 +40,14 @@ app.config(['$routeProvider',
                 templateUrl: 'partials/game-over.html',
                 controller: GameOverCtrl
             }).
+            when('/save', {
+                templateUrl: 'partials/save.html',
+                controller: SaveCtrl
+            }).
+            when('/load', {
+                templateUrl: 'partials/load.html',
+                controller: LoadCtrl
+            }).
             otherwise({
                 redirectTo: '/game-start'
             });
@@ -98,5 +106,19 @@ function RewardsCtrl($location, Game) {
 function GameOverCtrl($location, Game) {
     if (Game.mode != 'game-over') {
         $location.path('/home');
+    }
+}
+
+/**
+ * /load
+ */
+function LoadCtrl() {}
+
+/**
+ * /save
+ */
+function SaveCtrl($location, Game) {
+    if (!Game.loaded) {
+        $location.path('/game-start');
     }
 }
