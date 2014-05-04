@@ -21,7 +21,7 @@ class Weapon {
      */
     getTargetCommands() {
         var targets = [];
-        for (var f of this.game.battle.groupB) {
+        for (var f of this.game.battle.groupA) {
             targets.push(new TargetCommand(f, this.character));
         }
         return targets;
