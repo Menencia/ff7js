@@ -26,10 +26,11 @@ class Game {
 
         this.version = '0.1.2';
 
+        // loading saves
         this.saves = [];
         for (var i = 1; i <= 3; i++) {
             var s = localStorage['save' + i];
-            var save = (s) ? JSON.parse(s): {empty: true};
+            var save = (s) ? new Save(this, JSON.parse(s)): {empty: true};
             this.saves.push(save);
         }
         this.currentSave = 0;
@@ -197,24 +198,17 @@ class Game {
             return;
         }
 
-        var save = JSON.parse(localStorage['save' + this.currentLoad]);
-        this.extend(save);
+        var save = this.saves[this.currentLoad - 1];
+        for (var c of save.characters) {
+            this.characters.push(c);
+        }
+        this.time = save.time;
+        this.gil = save.gil;
 
         this.loaded = true;
         this.currentLoad = 0;
 
         this.setMode('home');
-    }
-
-    /**
-     * @param save
-     */
-    extend(save) {
-        for (c of this.save.characters) {
-            this.characters.push(new Character().extend(c));
-        }
-        this.time = save.time;
-        this.gil = save.gil;
     }
 
     /**
@@ -235,7 +229,7 @@ class Game {
 
         return {
             characters: characters,
-            gils: this.gil,
+            gil: this.gil,
             time: this.time
         };
     }

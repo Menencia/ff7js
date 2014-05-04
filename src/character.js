@@ -12,8 +12,14 @@ class Character extends Fighter {
         this.limit = 0;
     }
 
+    /**
+     * @param save
+     */
     extend(save) {
-        this.
+        save = _.omit(save, 'model');
+        for (var i in save) {
+            this[i] = save[i];
+        }
     }
 
     /**
@@ -178,7 +184,9 @@ class Character extends Fighter {
      * @returns {Array}
      */
     export() {
-        return _.pick(this, 'name', 'image', 'level');
+        var out = _.pick(this, 'level', 'hp', 'mp', 'exp', 'expMax', 'expTotal');
+        out.model = this.constructor.name;
+        return out;
     }
 
 }
