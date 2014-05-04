@@ -68,8 +68,8 @@ function IndexCtrl($scope) {
 /**
  * /start screen
  */
-function GameStartCtrl($scope, Game) {
-    $scope.game = Game;
+function GameStartCtrl(Game) {
+    Game.launched = true;
 }
 
 /**
@@ -79,15 +79,14 @@ function HomeCtrl($scope, $location, Game) {
     if (!Game.loaded) {
         $location.path('/game-start');
     }
-    $scope.game = Game;
 }
 
 /**
  * /fight
  */
 function FightCtrl($location, Game) {
-    if (Game.mode != 'fight') {
-        $location.path('/home');
+    if (!Game.loaded) {
+        $location.path('/game-start');
     }
 }
 
@@ -95,8 +94,8 @@ function FightCtrl($location, Game) {
  * /rewards
  */
 function RewardsCtrl($location, Game) {
-    if (Game.mode != 'rewards') {
-        $location.path('/home');
+    if (!Game.loaded) {
+        $location.path('/game-start');
     }
 }
 
@@ -104,15 +103,19 @@ function RewardsCtrl($location, Game) {
  * /game-over
  */
 function GameOverCtrl($location, Game) {
-    if (Game.mode != 'game-over') {
-        $location.path('/home');
+    if (!Game.loaded) {
+        $location.path('/game-start');
     }
 }
 
 /**
  * /load
  */
-function LoadCtrl() {}
+function LoadCtrl($location, Game) {
+    if (!Game.launched) {
+        $location.path('/game-start');
+    }
+}
 
 /**
  * /save
