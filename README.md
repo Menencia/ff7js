@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/menencia/ff7js.png?label=ready&title=Ready)](https://waffle.io/menencia/ff7js)
 # FF7js
 
 **Status**: Work In Progress
