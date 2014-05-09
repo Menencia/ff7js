@@ -30,9 +30,11 @@ class Game {
         this.saves = [];
         for (var i = 1; i <= 3; i++) {
             var s = localStorage['save' + i];
-            var save = (s) ? new Save(this, JSON.parse(s)): {empty: true};
+            var save = (s) ? new Save(this, JSON.parse(atob(s))): {empty: true};
             this.saves.push(save);
         }
+        var emptySaves = _.where(this.saves, {empty: true});
+        this.noSaves = (emptySaves.length == 3);
         this.currentSave = 0;
         this.currentLoad = 0;
 
@@ -183,7 +185,7 @@ class Game {
         }
 
         var s = this.export();
-        localStorage['save' + this.currentSave] = JSON.stringify(s);
+        localStorage['save' + this.currentSave] = btoa(JSON.stringify(s));
         this.saves[this.currentSave - 1] = s;
 
         this.currentSave = 0;

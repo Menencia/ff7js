@@ -6,7 +6,7 @@
              ng-mouseenter="sndMove()">NEW GAME</div>
         <div class="menu link"
              ng-click="game.goLoadScreen()"
-             ng-class="{active: game.saves.length > 0}"
+             ng-class="{active: !game.noSaves}"
              ng-mouseenter="sndMove()">Continue?</div>
     </div>
 
