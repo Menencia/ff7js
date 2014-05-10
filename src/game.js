@@ -17,7 +17,7 @@ class Game {
 
         this._id = _.uniqueId();
         this.mode = 'home';
-        this.gil = 200
+        this.gil = 200;
 
         this.characters = [];
         this.items = [];
@@ -26,24 +26,21 @@ class Game {
 
         this.version = '0.1.2';
 
+        // loading saves
+        this.saves = [];
+        for (var i = 1; i <= 3; i++) {
+            var s = localStorage['save' + i];
+            var save = (s) ? new Save(this, JSON.parse(atob(s))): {empty: true};
+            this.saves.push(save);
+        }
+        var emptySaves = _.where(this.saves, {empty: true});
+        this.noSaves = (emptySaves.length == 3);
+        this.currentSave = 0;
+        this.currentLoad = 0;
+
         // time
         this.time = 0;
         this.run();
-    }
-
-    /**
-     * Load new/saved game
-     */
-    load() {
-        if (!this.loaded) {
-            this.loaded = true;
-            var save = this.$cookieStore.get('game');
-            if (save) {
-                this.extend(save);
-            } else {
-                this.newGame();
-            }
-        }
     }
 
     /**
@@ -58,6 +55,13 @@ class Game {
             .addItem(new Potion(this));
 
         this.zone = new Zone1(this);
+
+        this.loaded = true;
+
+        new Sound('/sounds/ff7ok.wav', () => {
+            this.setMode('home');
+        });
+
     }
 
     /**
@@ -141,6 +145,108 @@ class Game {
      */
     getRewards() {
         this.setMode('home');
+    }
+
+    /**
+     * Go to load screen
+     */
+    goLoadScreen() {
+        this.setMode('load');
+    }
+
+    /**
+     * Go to save screen
+     */
+    goSave() {
+        this.setMode('save');
+    }
+
+    /**
+     *
+     */
+    chooseSave(num) {
+        this.currentSave = num;
+    }
+
+    /**
+     *
+     */
+    chooseLoad(num) {
+        this.currentLoad = num;
+    }
+
+    /**
+     * @param confirm
+     */
+    save(confirm) {
+        if (!confirm) {
+            this.currentSave = 0;
+            return;
+        }
+
+        var s = this.export();
+        localStorage['save' + this.currentSave] = btoa(JSON.stringify(s));
+        this.saves[this.currentSave - 1] = new Save(this, s);
+
+        this.currentSave = 0;
+    }
+
+    /**
+     * @param confirm
+     */
+    load(confirm) {
+        if (!confirm) {
+            this.currentLoad = 0;
+            return;
+        }
+
+        var save = this.saves[this.currentLoad - 1];
+
+        // characters
+        for (var c of save.characters) {
+            this.characters.push(c);
+        }
+
+        // zone
+        this.zone = save.zone;
+
+        // globals
+        this.time = save.time;
+        this.gil = save.gil;
+
+        this.loaded = true;
+        this.currentLoad = 0;
+
+        this.setMode('home');
+    }
+
+    /**
+     * @returns {*}
+     */
+    getSaves() {
+        return this.saves;
+    }
+
+    /**
+     * @returns {{characters: Array, gils: *, time: (*|time)}}
+     */
+    export() {
+        // characters
+        var characters = [];
+        for (var c of this.characters) {
+            characters.push(c.export());
+        }
+
+        // zone
+        var zone = this.zone.export();
+
+        // globals
+        return {
+            characters: characters,
+            zone: zone,
+            gil: this.gil,
+            time: this.time
+        };
     }
 
 }

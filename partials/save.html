@@ -1,0 +1,32 @@
+<div class="screen save">
+
+    <div class="block subtitle height50">Select a save game</div>
+    <div class="block empty height50"></div>
+    <div class="block title height50">Save</div>
+
+    <div class="block bsave" ng-click="game.chooseSave($index+1)" ng-repeat="save in game.saves">
+        <div ng-show="save.empty">EMPTY</div>
+        <div ng-hide="save.empty">
+            <div class="part avatar" ng-repeat="character in save.characters">
+                <img ng-src="{{character.image}}" />
+            </div>
+            <div class="block transparent infos1">
+                {{save.characters[0].name}}<br /><br />
+                Niveau {{save.characters[0].level}}
+            </div>
+            <div class="block infos2">
+                Time {{save.time}}<br />
+                Gil {{save.gil}}
+            </div>
+            <div class="block zone height50">{{save.zone.name}}</div>
+        </div>
+    </div>
+    <div class="block center confirm" ng-show="game.currentSave > 0">
+        Are you sure you want to save?
+        <div class="link active default"
+                ng-click="game.save(true)">Yes</div>
+        <div class="link active"
+                ng-click="game.save(false)">No</div>
+    </div>
+
+</div>

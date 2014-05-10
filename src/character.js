@@ -13,6 +13,16 @@ class Character extends Fighter {
     }
 
     /**
+     * @param save
+     */
+    extend(save) {
+        save = _.omit(save, 'model');
+        for (var i in save) {
+            this[i] = save[i];
+        }
+    }
+
+    /**
      * Increase limit bar
      * @param damages
      */
@@ -168,6 +178,15 @@ class Character extends Fighter {
         } else {
             fn();
         }
+    }
+
+    /**
+     * @returns {Array}
+     */
+    export() {
+        var out = _.pick(this, 'level', 'hp', 'mp', 'exp', 'expMax', 'expTotal', 'limit');
+        out.model = this.constructor.name;
+        return out;
     }
 
 }

@@ -23,4 +23,11 @@ class Zone {
             this.game.battle = new Battle(this.game, opponents, this.game.getTeam());
         });
     }
+
+    /**
+     * @returns {*}
+     */
+    export() {
+        return this.constructor.name;
+    }
 }
