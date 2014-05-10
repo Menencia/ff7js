@@ -186,7 +186,7 @@ class Game {
 
         var s = this.export();
         localStorage['save' + this.currentSave] = btoa(JSON.stringify(s));
-        this.saves[this.currentSave - 1] = s;
+        this.saves[this.currentSave - 1] = new Save(this, s);
 
         this.currentSave = 0;
     }
@@ -201,9 +201,16 @@ class Game {
         }
 
         var save = this.saves[this.currentLoad - 1];
+
+        // characters
         for (var c of save.characters) {
             this.characters.push(c);
         }
+
+        // zone
+        this.zone = save.zone;
+
+        // globals
         this.time = save.time;
         this.gil = save.gil;
 
@@ -224,13 +231,19 @@ class Game {
      * @returns {{characters: Array, gils: *, time: (*|time)}}
      */
     export() {
+        // characters
         var characters = [];
         for (var c of this.characters) {
             characters.push(c.export());
         }
 
+        // zone
+        var zone = this.zone.export();
+
+        // globals
         return {
             characters: characters,
+            zone: zone,
             gil: this.gil,
             time: this.time
         };

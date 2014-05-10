@@ -184,7 +184,7 @@ class Character extends Fighter {
      * @returns {Array}
      */
     export() {
-        var out = _.pick(this, 'level', 'hp', 'mp', 'exp', 'expMax', 'expTotal');
+        var out = _.pick(this, 'level', 'hp', 'mp', 'exp', 'expMax', 'expTotal', 'limit');
         out.model = this.constructor.name;
         return out;
     }

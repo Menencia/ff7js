@@ -1,8 +1,8 @@
 <div class="screen save">
 
-    <div class="block subtitle">Select a save game</div>
-    <div class="block empty"></div>
-    <div class="block title">Save</div>
+    <div class="block subtitle height50">Select a save game</div>
+    <div class="block empty height50"></div>
+    <div class="block title height50">Save</div>
 
     <div class="block bsave" ng-click="game.chooseSave($index+1)" ng-repeat="save in game.saves">
         <div ng-show="save.empty">EMPTY</div>
@@ -18,7 +18,7 @@
                 Time {{save.time}}<br />
                 Gil {{save.gil}}
             </div>
-            <div class="block zone"></div>
+            <div class="block zone height50">{{save.zone.name}}</div>
         </div>
     </div>
     <div class="block center confirm" ng-show="game.currentSave > 0">

@@ -5,7 +5,14 @@ class Save {
      */
     constructor(game, data) {
         this.game = game;
+
+        // characters
         this.characters = data.characters;
+
+        // zone
+        this.zone = data.zone;
+
+        // globals
         this.time = data.time;
         this.gil = data.gil;
     }
@@ -27,6 +34,20 @@ class Save {
      */
     get characters() {
         return this._characters;
+    }
+
+    /**
+     * @param data
+     */
+    set zone(data) {
+        this._zone = new window[data](this.game);
+    }
+
+    /**
+     * @returns {*}
+     */
+    get zone() {
+        return this._zone;
     }
 
 }
