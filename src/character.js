@@ -4,7 +4,8 @@ class Character extends Fighter {
      * @param game
      */
     constructor(game) {
-        super(game);
+        super(game.battle);
+        this.game = game;
         this.exp = 0;
         this.expMax = 100;
         this.expTotal = 0;
@@ -12,14 +13,13 @@ class Character extends Fighter {
     }
 
     /**
-     * Returns random hits
-     * @returns {*}
+     * @param save
      */
-    getHits() {
-        var base = this.weapon.power + this.level * 10;
-        var baseMin = Math.ceil((1 - 20/100) * base);
-        var baseMax = Math.ceil((1 + 20/100) * base);
-        return _.random(baseMin, baseMax);
+    extend(save) {
+        save = _.omit(save, 'model');
+        for (var i in save) {
+            this[i] = save[i];
+        }
     }
 
     /**
@@ -33,10 +33,10 @@ class Character extends Fighter {
         // search if there's an action awaiting
         if (this.limitFull()) {
             var current = (this.game.battle.commander.current != null) ? [this.game.battle.commander.current]: [];
-            var commandsPanels = _.union(this.game.battle.commander.list, current);
-            var commandsPanel = _.findWhere(commandsPanels, {character: this});
-            if (commandsPanel) {
-                commandsPanel.commands = this.getCommands();
+            var characterCommanders = _.union(this.game.battle.commander.list, current);
+            var characterCommander = _.findWhere(characterCommanders, {character: this});
+            if (characterCommander) {
+                characterCommander.panels[0].commands = this.getCommands();
             }
         }
     }
@@ -144,31 +144,49 @@ class Character extends Fighter {
      * List of character commands
      * @returns {Array<Command>}
      */
-    getCommands() {
+    getCommands(commandsPanel) {
         var commands = [];
 
-        // Attack or limit
-        if (this.limit === this.limitMax()) {
-            var subCommands = [];
-            for (var limit of this.limits) {
-                subCommands.push(new Command(limit.name, new LimitAction(limit.name, limit)));
-            }
-            var subCommandsPanel = new SubCommandsPanel(this, subCommands);
-            subCommandsPanel.isLimit = true;
-            commands.push(new Command('Limit', subCommandsPanel));
+        // Weapon or limit
+        if (this.limit !== this.limitMax()) {
+            commands.push(new AttackCommand(this));
         } else {
-            commands.push(new Command('Attack', new WeaponAction('Attack', this.weapon)));
+            commands.push(new LimitCommandsPanel(this));
         }
+
+        // Items
+        commands.push(new ItemCommandsPanel(this));
 
         return commands;
     }
 
     /**
-     * Execute something when atb is full
-     * Creating a commands panel awaiting for the player to choose a skill
+     * Character ready to accept commands
      */
-    exec() {
-        this.game.battle.commander.add(new CommandsPanel(this, this.getCommands()));
+    ready() {
+        this.battle.commander.add(
+            new CharacterCommander(this, new CommandsPanel(this, this.getCommands()))
+        );
+    }
+
+    /**
+     * @param fn
+     */
+    execute(fn) {
+        if (this.action != null) {
+            this.action.execute(fn);
+        } else {
+            fn();
+        }
+    }
+
+    /**
+     * @returns {Array}
+     */
+    export() {
+        var out = _.pick(this, 'level', 'hp', 'mp', 'exp', 'expMax', 'expTotal', 'limit');
+        out.model = this.constructor.name;
+        return out;
     }
 
 }

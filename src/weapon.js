@@ -10,42 +10,74 @@ class Weapon {
     }
 
     /**
-     * Animation for attack
-     * Cloud moves his weapon, and we show the damages above the enemy (1 hit)
+     * @returns {string}
+     */
+    getName() {
+        return 'Attack';
+    }
+
+    /**
+     * @returns {Array<TargetCommand>}
+     */
+    getTargetCommands() {
+        var targets = [];
+        for (var f of this.game.battle.groupA) {
+            targets.push(new TargetCommand(f, this.character));
+        }
+        return targets;
+    }
+
+    /**
      * @param targets
      * @param fn
      */
-    animate(targets, fn) {
-        var moves = [];
-        var plot = this.character.plot;
+    execute(targets, fn) {
+        this.game.battle.message = this.getName();
 
-        moves.push(new Move(( () => $(`.${plot} .plot`).attr('src', '/img/sprites/cloud2.png')), 100));
-        moves.push(new Move(( () => $(`.${plot} .plot`).attr('src', '/img/sprites/cloud1.png')), 100));
-        moves.push(new Move(( () => $(`.${plot} .plot`).attr('src', '/img/sprites/cloud2.png')), 50));
-        moves.push(new Move(( () => $(`.${plot} .plot`).attr('src', '/img/sprites/cloud3.png')), 50));
-        moves.push(new Move(( () => $(`.${plot} .plot`).attr('src', '/img/sprites/cloud4.png')), 50));
-        moves.push(new Move(( () => $(`.${plot} .plot`).attr('src', '/img/sprites/cloud3.png')), 100));
+        this.animate( () => {
 
-        var hits = this.character.getHits();
-        var plot2 = targets[0].plot;
+            var animator = new Animator();
 
-        moves.push(new Move(( () => $(`.${plot2} .msg`).text(hits)), 0));
-        moves.push(new Move(( () => $(`.${plot2} .msg`).css({top: '-1px', opacity: 0.9})), 0));
-        moves.push(new Move(( () => $(`.${plot2} .msg`).css({top: '-2px', opacity: 0.9})), 70));
-        moves.push(new Move(( () => $(`.${plot2} .msg`).css({top: '-3px', opacity: 0.8})), 70));
-        moves.push(new Move(( () => $(`.${plot2} .msg`).css({top: '-4px', opacity: 0.8})), 70));
-        moves.push(new Move(( () => $(`.${plot2} .msg`).css({top: '-5px', opacity: 0.7})), 70));
-        moves.push(new Move(( () => $(`.${plot2} .msg`).css({top: '-6px', opacity: 0.7})), 70));
-        moves.push(new Move(( () => $(`.${plot2} .msg`).css({top: '-7px', opacity: 0.6})), 70));
-        moves.push(new Move(( () => $(`.${plot2} .msg`).css({top: '-8px', opacity: 0.6})), 70));
-        moves.push(new Move(( () => $(`.${plot2} .msg`).css({top: '-9px', opacity: 0.5})), 70));
-        moves.push(new Move(( () => $(`.${plot2} .msg`).css({top: '-10px', opacity: 0.5})), 70));
-        moves.push(new Move(( () => $(`.${plot2} .msg`).text('')), 40));
+            // 1 hit to 1 target
+            var hits = this.getHits();
+            animator.add(targets[0].getDamagedAnimator(hits));
 
-        new Mover(this.character.game.$timeout, moves, () => {
-            targets[0].getDamaged(hits);
-            fn();
+            animator.run( () => {
+
+                this.game.battle.message = '';
+                fn();
+            });
         });
+
+    }
+
+    /**
+     * @param fn
+     */
+    animate(fn) {
+        var battle = this.game.battle;
+        var plot = this.character.plot;
+        var animator = new Animator();
+
+        animator.add(new Animation(battle, ( () => $(`.${plot} .plot`).attr('src', '/img/sprites/cloud2.png')), 100));
+        animator.add(new Animation(battle, ( () => $(`.${plot} .plot`).attr('src', '/img/sprites/cloud1.png')), 100));
+        animator.add(new Animation(battle, ( () => $(`.${plot} .plot`).attr('src', '/img/sprites/cloud2.png')), 50));
+        animator.add(new Animation(battle, ( () => $(`.${plot} .plot`).attr('src', '/img/sprites/cloud3.png')), 50));
+        animator.add(new Animation(battle, ( () => $(`.${plot} .plot`).attr('src', '/img/sprites/cloud4.png')), 50));
+        animator.add(new Animation(battle, ( () => $(`.${plot} .plot`).attr('src', '/img/sprites/cloud3.png')), 100));
+
+        animator.run(fn);
+    }
+
+    /**
+     * Returns random hits
+     * @returns {*}
+     */
+    getHits() {
+        var base = this.power + this.character.level * 10;
+        var baseMin = Math.ceil((1 - 20/100) * base);
+        var baseMax = Math.ceil((1 + 20/100) * base);
+        return _.random(baseMin, baseMax);
     }
 
 }

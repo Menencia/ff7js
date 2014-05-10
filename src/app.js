@@ -20,6 +20,10 @@ app.config(['$routeProvider',
     function($routeProvider) {
 
         $routeProvider.
+            when('/game-start', {
+                templateUrl: 'partials/game-start.html',
+                controller: GameStartCtrl
+            }).
             when('/home', {
                 templateUrl: 'partials/home.html',
                 controller: HomeCtrl
@@ -36,44 +40,53 @@ app.config(['$routeProvider',
                 templateUrl: 'partials/game-over.html',
                 controller: GameOverCtrl
             }).
+            when('/save', {
+                templateUrl: 'partials/save.html',
+                controller: SaveCtrl
+            }).
+            when('/load', {
+                templateUrl: 'partials/load.html',
+                controller: LoadCtrl
+            }).
             otherwise({
-                redirectTo: '/home'
+                redirectTo: '/game-start'
             });
     }
 ]);
 
 /**
- * NAV
+ * INDEX
  */
+function IndexCtrl($scope) {
 
-function NavCtrl($scope, $location, Game) {
-
-    $scope.isActive = function(route) {
-        return route === $location.path();
-    }
-
-    /**
-     * Go to the game
-     */
-    $scope.home = function() {
-        $location.path("/home");
+    $scope.sndMove = function() {
+        new Sound('/sounds/ff7move.wav');
     };
 
 }
 
 /**
+ * /start screen
+ */
+function GameStartCtrl(Game) {
+    Game.launched = true;
+}
+
+/**
  * /game
  */
-function HomeCtrl(Game) {
-    Game.load();
+function HomeCtrl($scope, $location, Game) {
+    if (!Game.loaded) {
+        $location.path('/game-start');
+    }
 }
 
 /**
  * /fight
  */
 function FightCtrl($location, Game) {
-    if (Game.mode != 'fight') {
-        $location.path('/home');
+    if (!Game.loaded) {
+        $location.path('/game-start');
     }
 }
 
@@ -81,8 +94,8 @@ function FightCtrl($location, Game) {
  * /rewards
  */
 function RewardsCtrl($location, Game) {
-    if (Game.mode != 'rewards') {
-        $location.path('/home');
+    if (!Game.loaded) {
+        $location.path('/game-start');
     }
 }
 
@@ -90,7 +103,25 @@ function RewardsCtrl($location, Game) {
  * /game-over
  */
 function GameOverCtrl($location, Game) {
-    if (Game.mode != 'game-over') {
-        $location.path('/home');
+    if (!Game.loaded) {
+        $location.path('/game-start');
+    }
+}
+
+/**
+ * /load
+ */
+function LoadCtrl($location, Game) {
+    if (!Game.launched) {
+        $location.path('/game-start');
+    }
+}
+
+/**
+ * /save
+ */
+function SaveCtrl($location, Game) {
+    if (!Game.loaded) {
+        $location.path('/game-start');
     }
 }

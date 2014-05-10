@@ -25,7 +25,10 @@
     </div>
 
     <div class="block menu">
-        <div class="menu link" ng-click="game.zone.explore()" ng-class="{active: game.zone.canExplore()}">EXPLORE</div>
+        <div class="menu link"
+             ng-click="game.zone.explore()"
+             ng-class="{active: game.zone.canExplore()}"
+             ng-mouseenter="sndMove()">EXPLORE</div>
         <div class="menu link">ITEM</div>
         <div class="menu link">MAGIC</div>
         <div class="menu link">MATERIA</div>
@@ -35,7 +38,9 @@
         <div class="menu link">LIMIT</div>
         <div class="menu link">CONFIG</div>
         <div class="menu link">PHS</div>
-        <div class="menu link">SAVE</div>
+        <div class="menu link active"
+             ng-click="game.goSave()"
+             ng-mouseenter="sndMove()">SAVE</div>
     </div>
 
     <div class="block infos">

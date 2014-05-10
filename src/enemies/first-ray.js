@@ -1,6 +1,9 @@
 class FirstRay extends Enemy {
 
-    constructor(game) {
+    /**
+     * @param battle
+     */
+    constructor(battle) {
         this.name = '1st Ray';
         this.image = '/img/enemies/1/1st-ray.png';
         this.plot = 'first-ray';
@@ -14,7 +17,49 @@ class FirstRay extends Enemy {
         this.gil = 30;
         this.ap = 4;
 
-        super(game);
+        super(battle);
+
+        // battle
+        this.count = 0
     }
+
+    /**
+     * @param targets
+     * @param fn
+     */
+    execute(targets, fn) {
+        if (this.count == 0) {
+            this.action = this.laserCannon;
+            this.count = 1;
+        } else {
+            this.count = 0;
+        }
+        super.execute(targets, fn);
+    }
+
+    /**
+     * @param fn
+     */
+    laserCannon(fn) {
+        var target = _.sample(this.battle.groupB);
+
+        this.battle.message = 'Laser Cannon';
+
+        this.animate( () => {
+
+            var animator = new Animator();
+
+            // 1 hit to 1 target
+            animator.add(target.getDamagedAnimator(10));
+
+            animator.run( () => {
+
+                this.battle.message = '';
+                fn();
+            });
+        });
+
+    }
+
 
 }

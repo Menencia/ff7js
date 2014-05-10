@@ -5,8 +5,8 @@ class Battle {
      * GroupA is at the left
      * GroupB is at the right
      * @param game
-     * @param groupA Array<Fighter>
-     * @param groupB Array<Fighter>
+     * @param groupA {Array<Fighter>}
+     * @param groupB {Array<Fighter>}
      */
     constructor (game, groupA, groupB) {
         this.game = game;
@@ -22,29 +22,42 @@ class Battle {
         this.game.setMode('fight');
         for (var f of this.groupA) {
             f.group = 'A';
+            f.battle = this;
             f.fight();
         }
         for (var f of this.groupB) {
             f.group = 'B';
+            f.battle = this;
             f.fight();
         }
         this.run();
     }
 
     /**
-     * Checks and executes actions
+     * Checks and executes awaiting actions
      */
     run() {
         this.running = this.game.$timeout( () => {
             if (!this.pause && this.actions.length > 0) {
+
+                // stop time
                 this.pause = true;
+
+                // get next action
                 this.action = this.actions.shift();
-                this.message = this.action.name;
-                this.action.exec( () => {
-                    this.action.fighter.newTurn();
-                    this.action = null;
-                    this.message = '';
+
+                // and do it
+                this.action.execute( () => {
+
+                    // pause over
                     this.pause = false;
+                    // and show goes on
+                    this.action.fighter.newTurn();
+
+                    // test end of game
+                    if (this.testEnd()) {
+                        this.end();
+                    }
                 });
             }
             this.run();
@@ -56,25 +69,26 @@ class Battle {
      * - All the party group has 0 HP
      * @param group
      */
-    testEnd(group) {
-        var remaining = _.filter(this['group' + group], function(fighter) {return (fighter.hp > 0);}).length;
-        if (remaining === 0 && group == 'A') {
-            this.end();
-        } else {
+    testEnd() {
+        var groupA = _.filter(this.groupA, function(fighter) {return (fighter.hp > 0);}).length;
+        var groupB = _.filter(this.groupB, function(fighter) {return (fighter.hp > 0);}).length;
+        if (groupB === 0) {
             this.gameOver();
+        } else if (groupA === 0) {
+            this.win();
         }
     }
 
     /**
      * End of the battle
      */
-    end() {
+    win() {
         var remaining = _.filter(this.groupA, function(fighter) {return (fighter.hp > 0);}).length;
         if (remaining === 0) {
 
             // Cancel timeouts
             var groups = _.union(this.groupA, this.groupB);
-            for (var f in groups) {
+            for (var f of groups) {
                 this.game.$timeout.cancel(f.fighting);
             }
             this.game.$timeout.cancel(this.running);
