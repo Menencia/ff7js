@@ -2,13 +2,17 @@
 
 **Status**: Work In Progress
 
-## Testing
+Play : [Official Website](http://ff7js.menencia.com)
+
+Dev Blog: [Blog Dev](http://ff7js.tumblr.com)
+
+## Test & help
 
 Please follow the steps after cloning :
 
-- Install node libs: `npm install`
-
 - Install JS libs: `bower update`
+
+- Install node libs: `npm install`
 
 - Install Gulp for compiling: `npm install gulp -g`
 
