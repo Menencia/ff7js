@@ -24,7 +24,7 @@ class Game {
 
         this.$rootScope.game = this;
 
-        this.version = '0.1.2';
+        this.version = '0.2';
 
         // loading saves
         this.saves = [];
