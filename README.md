@@ -4,19 +4,11 @@
 
 Play : [Official Website](http://ff7js.menencia.com)
 
-Dev Blog: [Blog Dev](http://ff7js.tumblr.com)
+[What's new ?](https://github.com/Menencia/ff7js/releases)
 
-## Test & help
+[Report bug](https://github.com/Menencia/ff7js/issues/new)
 
-Please follow the steps after cloning :
-
-- Install JS libs: `bower update`
-
-- Install node libs: `npm install`
-
-- Install Gulp for compiling: `npm install gulp -g`
-
-- Compile ES6 JS files to ES5: `gulp`
+[How to deploy](https://github.com/Menencia/ff7js/wiki/testing)
 
 ## Screens
 
